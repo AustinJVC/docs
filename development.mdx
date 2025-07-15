@@ -1,107 +1,53 @@
----
-title: 'Development'
-description: 'Preview changes locally to update your docs'
----
+Development Resources
+This section provides additional information and resources for developers working with The Slow Net API, covering aspects of local development, backend integration, and troubleshooting.
 
-<Info>
-  **Prerequisite**: Please install Node.js (version 19 or higher) before proceeding. <br />
-  Please upgrade to ```docs.json``` before proceeding and delete the legacy ```mint.json``` file.
-</Info>
+Local Development Setup
+To run and test your integrations with The Slow Net API locally, you can point your API calls to the local development server.
 
-Follow these steps to install and run Mintlify on your operating system:
+Local API Base URL: http://localhost:3000/api/
 
-**Step 1**: Install Mintlify:
+When running your own application locally, ensure it's configured to use this base URL for API requests during development. This allows you to interact with your local instance of The Slow Net backend (if you are running one) without affecting your live production data.
 
-<CodeGroup>
+Supabase Integration Notes
+The Slow Net backend utilizes Supabase for its database and authentication services.
 
-  ```bash npm
-  npm i -g mintlify
-  ```
+API Key vs. Session Authentication
+As noted in the Quickstart Guide, our API endpoints support two primary authentication methods:
 
-```bash yarn
-yarn global add mintlify
-```
+API Key (Programmatic Access): This is the recommended method for server-side applications, scripts, or any programmatic interaction. The API Key, sent in the X-API-Key header, allows our backend to use the Supabase Service Role Key. This bypasses Supabase's Row Level Security (RLS) on user data, enabling full management capabilities for the authenticated user's resources.
 
-</CodeGroup>
+Important: The SUPABASE_SERVICE_ROLE_KEY is strictly a server-side secret and is never exposed to the client. Your API Key acts as the secure bridge for your programmatic access.
 
-**Step 2**: Navigate to the docs directory (where the `docs.json` file is located) and execute the following command:
+Session/Cookie (Dashboard-Initiated Requests): When you interact with The Slow Net through its web dashboard, standard cookie-based sessions handle authentication. The API routes are designed to work seamlessly with these sessions, providing a consistent experience whether you're using the dashboard or the API directly.
 
-```bash
-mintlify dev
-```
+Understanding Row Level Security (RLS)
+While your API Key allows our backend to bypass RLS for your data operations, it's beneficial to understand Supabase's RLS if you're building applications that directly interact with Supabase (e.g., a client-side application using the Supabase client library). RLS ensures that users can only access data they are authorized to see, providing a robust security layer. Our API handles these permissions on your behalf when you use an API Key.
 
-A local preview of your documentation will be available at `http://localhost:3000`.
+Troubleshooting
+Common API Errors
+401 Unauthorized:
 
-### Custom Ports
+Cause: Missing X-API-Key header, invalid API Key, or expired session.
 
-By default, Mintlify uses port 3000. You can customize the port Mintlify runs on by using the `--port` flag. To run Mintlify on port 3333, for instance, use this command:
+Solution: Ensure your API Key is correctly included in the X-API-Key header and that it is active. Re-generate if necessary from your dashboard.
 
-```bash
-mintlify dev --port 3333
-```
+400 Bad Request:
 
-If you attempt to run Mintlify on a port that's already in use, it will use the next available port:
+Cause: Invalid request body format (e.g., malformed JSON), missing required parameters, or incorrect data types.
 
-```md
-Port 3000 is already in use. Trying 3001 instead.
-```
+Solution: Review the API Reference for the specific endpoint to ensure your request payload matches the expected schema.
 
-## Mintlify Versions
+404 Not Found:
 
-Please note that each CLI release is associated with a specific version of Mintlify. If your local website doesn't align with the production version, please update the CLI:
+Cause: Incorrect endpoint URL, or the resource you're trying to access (e.g., a specific message ID for Discord Slowhooks) does not exist.
 
-<CodeGroup>
+Solution: Double-check the endpoint path and verify the existence of any resource IDs.
 
-```bash npm
-npm i -g mintlify@latest
-```
+500 Internal Server Error:
 
-```bash yarn
-yarn global upgrade mintlify
-```
+Cause: An unexpected error occurred on the server. This could be due to a bug in the API, a database issue, or an unhandled exception.
 
-</CodeGroup>
+Solution: While you can't directly fix this, ensure your request is valid. If the issue persists, please report it to The Slow Net support with details of your request.
 
-## Validating Links
-
-The CLI can assist with validating reference links made in your documentation. To identify any broken links, use the following command:
-
-```bash
-mintlify broken-links
-```
-
-## Deployment
-
-<Tip>
-  Unlimited editors available under the [Pro
-  Plan](https://mintlify.com/pricing) and above.
-</Tip>
-
-If the deployment is successful, you should see the following:
-
-<Frame>
-  <img src="/images/checks-passed.png" style={{ borderRadius: '0.5rem' }} />
-</Frame>
-
-## Code Formatting
-
-We suggest using extensions on your IDE to recognize and format MDX. If you're a VSCode user, consider the [MDX VSCode extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx) for syntax highlighting, and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for code formatting.
-
-## Troubleshooting
-
-<AccordionGroup>
-  <Accordion title='Error: Could not load the "sharp" module using the darwin-arm64 runtime'>
-
-    This may be due to an outdated version of node. Try the following:
-    1. Remove the currently-installed version of mintlify: `npm remove -g mintlify`
-    2. Upgrade to Node v19 or higher.
-    3. Reinstall mintlify: `npm install -g mintlify`
-  </Accordion>
-
-  <Accordion title="Issue: Encountering an unknown error">
-  
-    Solution: Go to the root of your device and delete the \~/.mintlify folder. Afterwards, run `mintlify dev` again.
-  </Accordion>
-</AccordionGroup>
-
-Curious about what changed in the CLI version? [Check out the CLI changelog.](https://www.npmjs.com/package/mintlify?activeTab=versions)
+Need More Help?
+If you encounter any issues not covered here or have further questions, please reach out to our support team through the contact options available on The Slow Net website.

@@ -38,11 +38,11 @@
     {
       "group": "API Reference",
       "pages": [
-        "api-reference/index",
-        "api-reference/account",
-        "api-reference/email-forwarding",
-        "api-reference/discord-webhooks",
-        "api-reference/site-configuration"
+        {
+          "id": "api-reference",
+          "title": "API Reference",
+          "openapi": "api-reference/the-slow-net-api.json"
+        }
       ]
     },
     {

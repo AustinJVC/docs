@@ -1,80 +1,98 @@
 # Quickstart Guide
 
-This guide will walk you through the essential steps to get started with The Slow Net API.
+This guide will help you get started with The Slow Net API, from obtaining your API key to making your first authenticated request.
 
----
+## 1. Get Your API Key
 
-## 1. Generate Your API Key
+To interact with The Slow Net API programmatically, you'll need an **API Key**.
 
-All API requests to The Slow Net require an API key for authentication. You can generate and manage your API keys directly from your dashboard.
+1.  **Log in to your Dashboard:** Go to [https://theslow.net/dashboard](https://theslow.net/dashboard).
+2.  **Navigate to API Settings:** Look for a section related to "API Keys" or "Developer Settings" within your dashboard.
+3.  **Generate a New Key:** Follow the instructions to generate a new API Key. Your key will be in the format `UUID.SECRET_STRING`.
+4.  **Keep it Secure:** Treat your API Key like a password. Do not share it publicly or commit it directly to your source code.
 
-1.  **Log in to your Slow Net dashboard:**
-    [Go to your Dashboard](https://theslow.net/dashboard)
+## 2. Understanding Authentication
 
-2.  **Navigate to the "Settings" section** at the bottom of the page.
+All authenticated API requests require your API Key to be sent in the `X-API-Key` HTTP header.
 
-3.  **Find the "API Keys" subsection.**
-
-4.  **Enter an optional "New API Key Name"** (e.g., "My Automation Script") to help you identify its purpose later.
-
-5.  **Click the "Generate New Key" button.**
-
-6.  **Copy the entire API key immediately!** It will be displayed in a yellow box and will be in the format `UUID.SECRET_STRING` (e.g., `a1b2c3d4-e5f6-7890-1234-567890abcdef.your-long-secret-string`).
-    **Important:** For security reasons, the full secret part of the key is only shown once. Make sure to store it securely.
-
----
-
-## 2. Authenticate Your Requests
-
-To authenticate your API requests, you must include your full API key in a custom HTTP header: `X-API-Key`.
-
-### Header Format
+**Example Header:**
 
 ```
-X-API-Key: UUID.SECRET_STRING
+X-API-Key: your_uuid.your_secret_string_here
 ```
 
-### Example
+## 3. API Base URLs
 
-Here's how you would include your API key in a `curl` request:
+All API endpoints are relative to one of the following base URLs:
 
-```bash copy
+* **Production:** `https://theslow.net/api/`
+* **Local Development:** `http://localhost:3000/api/`
+
+## 4. Make Your First API Call
+
+Let's make a simple `GET` request to retrieve your display name.
+
+**Endpoint:** `GET /api/account/get-display-name`
+
+Replace `your_uuid.your_secret_string_here` with your actual API Key.
+
+### Using cURL (Command Line)
+
+```bash
 curl -X GET \
-  -H "X-API-Key: a21894a7-dcb3-4d1a-8ddb-4e9f0585baf4.2500e47bc30423f50967f8d1f38e8d4acba659c607a7a6741693c7515f4c04ab" \
-  [https://theslow.net/api/account/get-display-name](https://theslow.net/api/account/get-display-name)
+  [https://theslow.net/api/account/get-display-name](https://theslow.net/api/account/get-display-name) \
+  -H 'X-API-Key: your_uuid.your_secret_string_here'
 ```
 
-**Base URL:** All API endpoints are relative to `https://theslow.net/api/`. For local development, use `http://localhost:3000/api/`.
+### Using JavaScript (Fetch API)
 
----
+```javascript
+async function getDisplayName() {
+  const apiKey = 'your_uuid.your_secret_string_here'; // Replace with your actual API Key
 
-## 3. Understanding API Responses
+  try {
+    const response = await fetch('[https://theslow.net/api/account/get-display-name](https://theslow.net/api/account/get-display-name)', {
+      method: 'GET',
+      headers: {
+        'X-API-Key': apiKey,
+        'Content-Type': 'application/json'
+      }
+    });
 
-The API will return JSON responses.
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('API Error:', errorData.message);
+      return;
+    }
 
-### Success Responses (2xx Status Codes)
-
-Successful requests will typically return a `200 OK` status code and a JSON object with the requested data.
-
-```json
-{
-  "status": "success",
-  "data": {
-    "some_field": "value"
+    const data = await response.json();
+    console.log('Your Display Name:', data.displayName);
+  } catch (error) {
+    console.error('Network or other error:', error);
   }
 }
+
+getDisplayName();
 ```
 
-### Error Responses (4xx and 5xx Status Codes)
-
-Errors will return an appropriate HTTP status code (e.g., `400 Bad Request`, `401 Unauthorized`, `404 Not Found`, `500 Internal Server Error`) and a JSON object with an `error` message.
+### Expected Response (Success)
 
 ```json
 {
-  "error": "A descriptive error message explaining what went wrong."
+  "displayName": "YourCurrentDisplayName"
+}
+```
+
+### Expected Response (Error - Unauthorized)
+
+If your API Key is missing or invalid, you will receive a `401 Unauthorized` response:
+
+```json
+{
+  "message": "Unauthorized"
 }
 ```
 
 ---
 
-You are now ready to explore the specific API endpoints in the [API Reference](/api-reference/index) section!
+You have successfully made your first API call! Now you're ready to explore the full capabilities of The Slow Net API using the [API Reference](api-reference).
