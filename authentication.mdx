@@ -1,0 +1,108 @@
+---
+title: Authentication
+description: All requests to our API require authentication using a unique API key. This ensures that only authorized applications can access your data and perform actions on your behalf.
+---
+
+## How to Get Your API Key
+Your API key is generated and managed within your dashboard.
+
+1. **Sign Up/Log In:** If you haven't already, [create an account](https://theslow.net/signup) or [log in](https://theslow.net/login) to your dashboard.
+
+2. **Navigate to API Keys:** Once logged in, go to the Settings section and look for the "API Keys" area.
+
+3. **Generate Key:** Click on "Generate" (or similar). Your new API key will be displayed.
+
+- **Important:** Copy your API key immediately upon generation. For security reasons, it will not be displayed again.
+
+Your API key will look like two random sets of characters, seperated by a ``.`` 
+
+## Using Your API Key
+To authenticate your API requests, you must include your API key in the ``X-API-KEY`` HTTP header for every request.
+
+## Header Format
+The ``X-API-KEY`` header should be set as follows:
+
+``X-API-KEY: YOUR_API_KEY_HERE``
+
+Replace ``YOUR_API_KEY_HERE`` with the actual API key you obtained from your dashboard.
+
+## Example API Calls with Authentication
+Here are examples demonstrating how to include your API key in requests using various programming languages and tools. We'll use a hypothetical ``GET /data`` endpoint for demonstration.
+
+### Using cURL (Command Line)
+```
+curl -X GET \
+  'https://theslow.net/api/data' \
+  -H 'X-API-KEY: YOUR_API_KEY' \
+  -H 'Content-Type: application/json'
+```
+### Using Python
+```python
+import requests
+
+API_KEY = "YOUR_API_KEY" # Replace with your actual API key
+BASE_URL = "https://theslow.net/api"
+
+headers = {
+    "X-API-KEY": API_KEY,
+    "Content-Type": "application/json"
+}
+
+try:
+    response = requests.get(f"{BASE_URL}/data", headers=headers)
+    response.raise_for_status() # Raise an exception for HTTP errors (4xx or 5xx)
+    print("API Call Successful!")
+    print(response.json())
+except requests.exceptions.RequestException as e:
+    print(f"An error occurred: {e}")
+    if response:
+        print(f"Response status code: {response.status_code}")
+        print(f"Response body: {response.text}")
+```
+### Using JavaScript (Browser ``fetch``)
+```js
+async function fetchData() {
+  const API_KEY = "YOUR_API_KEY"; // Replace with your actual API key
+  const BASE_URL = "https://theslow.net/api";
+
+  try {
+    const response = await fetch(`${BASE_URL}/data`, {
+      method: 'GET',
+      headers: {
+        'X-API-KEY': API_KEY, // Pass API key in header
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('API Call Failed:', response.status, errorData.error);
+      return null;
+    }
+
+    const data = await response.json();
+    console.log('Data:', data);
+    return data;
+  } catch (error) {
+    console.error('An unexpected error occurred:', error);
+    return null;
+  }
+}
+
+// Example usage:
+// fetchData();
+```
+
+## API Key Security Best Practices
+- **Keep Keys Confidential:** Never expose your API keys in client-side code (e.g., directly in a public JavaScript file). If you're building a frontend application, proxy requests through your backend or use environment variables.
+
+- **Do Not Embed in Code:** Avoid hardcoding API keys directly into your source code. Use environment variables or a secure configuration management system.
+
+- **Rotate Keys Regularly:** Periodically generate new API keys and revoke old ones. This minimizes the risk if a key is ever compromised.
+
+- **Restrict Access:** Grant API keys only the necessary permissions. If your system supports it, create separate keys for different applications or environments with limited scopes.
+
+- **Monitor Usage:** Keep an eye on your API usage patterns. Unusual spikes or activity might indicate a compromised key.
+
+## Need Further Assistance?
+If you have any questions about error handling or encounter unexpected errors, please don't hesitate to reach out to our [support team](https://theslow.net/dashboard#support).

@@ -1,0 +1,91 @@
+---
+title: Rate Limits
+description: To ensure the stability and fair usage of our API for all users, we implement rate limiting. This means there's a limit to the number of requests you can make within a given time period. Understanding and respecting these limits is crucial for building robust applications.
+---
+
+## How Rate Limiting Works
+Our API applies rate limits per API key. If you exceed the allowed number of requests, your subsequent requests will be temporarily blocked, and you will receive a 429 Too Many Requests HTTP status code.
+
+## Our Rate Limit Policy
+Currently, our general rate limit policy is:
+
+- **60 requests per minute** per API key.
+
+Specific endpoints may have different limits, which will be detailed in their respective API reference documentation.
+
+## Handling Rate Limits
+When you receive a ``429 Too Many Requests`` response, your application should pause and retry the request after the X-RateLimit-Reset time, or implement an exponential backoff strategy.
+
+### Exponential Backoff Strategy
+Exponential backoff is a standard strategy for retrying failed requests. It involves waiting for increasingly longer periods between retries. This helps to:
+
+- Reduce the load on the API.
+
+- Increase the chance of a successful retry.
+
+- Avoid being permanently blocked.
+
+### Basic Algorithm:
+
+1. Make an API request.
+
+2. If a ``429`` response is received:
+
+- Extract the X-RateLimit-Reset header to determine when to retry.
+
+- Wait until the reset time (or for a calculated duration).
+
+- Retry the request.
+
+3. If other errors occur, consider retrying with increasing delays (e.g., 1s, 2s, 4s, 8s, etc., up to a maximum).
+
+Example: Handling ``429`` in Python
+```python
+import requests
+import time
+
+API_KEY = "YOUR_API_KEY"
+BASE_URL = "https://theslow.net/api"
+ENDPOINT = "/some-endpoint-that-might-hit-rate-limit" # Replace with an actual endpoint
+
+headers = {
+    "X-API-KEY": API_KEY,
+    "Content-Type": "application/json"
+}
+
+def make_api_call_with_retry(url, headers, max_retries=5):
+    retries = 0
+    while retries < max_retries:
+        try:
+            response = requests.get(url, headers=headers)
+            if response.status_code == 429:
+                reset_time = int(response.headers.get('X-RateLimit-Reset', time.time() + 60))
+                wait_time = reset_time - int(time.time()) + 1 # Add 1 second buffer
+                print(f"Rate limit hit. Waiting for {wait_time} seconds before retrying...")
+                time.sleep(max(0, wait_time)) # Ensure wait_time is not negative
+                retries += 1
+                continue # Retry the request
+            response.raise_for_status()
+            print("Request successful:", response.json())
+            return response.json()
+        except requests.exceptions.HTTPError as http_err:
+            print(f"HTTP error occurred: {http_err}")
+            if response:
+                print(f"Response body: {response.text}")
+            break # Exit on other HTTP errors
+        except requests.exceptions.ConnectionError as conn_err:
+            print(f"Connection error occurred: {conn_err}")
+            time.sleep(2 ** retries) # Exponential backoff for connection errors
+            retries += 1
+        except Exception as err:
+            print(f"An unexpected error occurred: {err}")
+            break # Exit on unexpected errors
+    print("Max retries exceeded or unhandled error.")
+    return None
+
+# Example usage:
+# make_api_call_with_retry(f"{BASE_URL}{ENDPOINT}", headers)
+```
+
+## Need Further Assistance?
+If you have any questions about rate limiting or encounter persistent 429 errors, please don't hesitate to reach out to our [support team](https://theslow.net/dashboard#support).

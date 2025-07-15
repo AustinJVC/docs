@@ -1,0 +1,119 @@
+---
+title: Get Display Name 
+description: Retrieves the display name of the currently authenticated user.
+---
+## Endpoint
+``GET https://theslow.net/api/account/get-display-name``
+
+## Description
+This endpoint allows you to fetch the display_name associated with the specified API key.
+
+## Authentication
+This endpoint requires authentication. Include your API key in the X-API-KEY HTTP header for every request.
+
+``X-API-KEY: YOUR_API_KEY_HERE``
+
+For more details on authentication, refer to the [Authentication Guide](authentication).
+
+## Parameters
+This endpoint does not require any path, query, or request body parameters.
+
+## Request Examples
+### Using cURL (Command Line)
+```bash
+curl -X GET \
+  'https://theslow.net/api/account/get-display-name' \
+  -H 'X-API-KEY: YOUR_API_KEY' \
+  -H 'Content-Type: application/json'
+```
+
+### Using Python
+```python
+import requests
+import json
+
+API_KEY = "YOUR_API_KEY" # Replace with your actual API key
+BASE_URL = "https://theslow.net/api"
+
+headers = {
+    "X-API-KEY": API_KEY,
+    "Content-Type": "application/json"
+}
+
+try:
+    response = requests.get(f"{BASE_URL}/account/get-display-name", headers=headers)
+    response.raise_for_status()
+    print("API Call Successful!")
+    print(response.json())
+except requests.exceptions.RequestException as e:
+    print(f"An error occurred: {e}")
+    if response:
+        print(f"Response status code: {response.status_code}")
+        print(f"Response body: {response.text}")
+```
+
+### Using JavaScript (Browser fetch)
+```js
+async function getDisplayName() {
+  const API_KEY = "YOUR_API_KEY"; // Replace with your actual API key
+  const BASE_URL = "https://theslow.net/api";
+
+  try {
+    const response = await fetch(`${BASE_URL}/account/get-display-name`, {
+      method: 'GET',
+      headers: {
+        'X-API-KEY': API_KEY,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('API Call Failed:', response.status, errorData.error);
+      return null;
+    }
+
+    const data = await response.json();
+    console.log('Display Name:', data.display_name);
+    return data.display_name;
+  } catch (error) {
+    console.error('An unexpected error occurred:', error);
+    return null;
+  }
+}
+
+// Example usage:
+// getDisplayName();
+```
+## Responses
+### Success Response (200 OK)
+Returns the user's display name.
+```json
+// Example 1: Display name exists
+{
+  "display_name": "JohnDoe"
+}
+```
+### Error Responses
+#### 401 Unauthorized
+Occurs if authentication fails (e.g., missing or invalid X-API-KEY).
+```json
+{
+  "error": "Unauthorized"
+}
+```
+#### 500 Internal Server Error
+Occurs due to server-side issues, such as a database error or an unexpected critical error.
+```jaon
+// Example 1: Database error
+{
+  "error": "Database error while fetching profile."
+}
+
+// Example 2: General internal server error
+{
+  "error": "An internal server error occurred."
+}
+```
+## Need Further Assistance?
+If you have any questions or encounter issues, please don't hesitate to reach out to our [support team](https://theslow.net/dashboard#support).

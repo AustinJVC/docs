@@ -1,0 +1,124 @@
+This guide will get you set up and ready to make your first API call in just a few minutes. Follow these simple steps to begin integrating with our platform.
+
+## Step 1: Sign Up and Get Your API Key
+
+Before you can interact with our APIs, you'll need to sign up for an account and obtain your unique API key.
+
+1. **Sign Up:** If you haven't already, create an account here.
+
+2. **Access Dashboard:** Once signed in, navigate to the settings section of the dashboard (near the bottom!)
+
+3. **Generate API Key:** In the settings, look for the area titled "API Keys." Generate a new API key.
+
+- **Important:** Keep your API key secure and do not share it publicly. Treat it like a password. When interacting with most of our general APIs, you will typically pass this key in an X-API-KEY header.
+
+## Step 2: Choose Your Preferred Language/Tool
+Our API is designed to be language-agnostic, meaning you can use it with any programming language or tool that can send HTTP requests. Here are some common options:
+
+- **cURL:** For quick command-line testing.
+
+- **Python:** Ideal for scripting and backend applications.
+
+- **JavaScript (Node.js/Browser):** Great for web applications.
+
+## Step 3: Make Your First API Call
+Let's make a simple call to verify your setup. We'll use the ``/api/account/get-display-name`` endpoint as an example, which retrieves the display name of the currently authenticated user.
+
+### Using cURL (Command Line)
+Open your terminal or command prompt and run the following command. Replace YOUR_API_KEY with the actual API key you obtained in Step 1.
+```
+curl -X GET \
+  'https://theslow.net/api/account/get-display-name' \
+  -H 'X-API-KEY: YOUR_API_KEY' \
+  -H 'Content-Type: application/json'
+```
+
+### Using Python
+Create a new Python file (e.g., ``first_call.py``) and add the following code:
+```python
+import requests
+
+API_KEY = "YOUR_API_KEY" # Replace with your actual API key
+BASE_URL = "https://theslow.net/api" # All APIs are accessible via this base URL
+
+headers = {
+    "X-API-KEY": API_KEY,
+    "Content-Type": "application/json"
+}
+
+try:
+    response = requests.get(f"{BASE_URL}/account/get-display-name", headers=headers)
+    response.raise_for_status() # Raise an exception for HTTP errors (4xx or 5xx)
+    print("API Call Successful!")
+    print(response.json())
+except requests.exceptions.RequestException as e:
+    print(f"An error occurred: {e}")
+    if response:
+        print(f"Response status code: {response.status_code}")
+        print(f"Response body: {response.text}")
+```
+Run the Python script:
+```bash
+python first_call.py
+```
+
+#### Using JavaScript (Browser ``fetch``)
+This example demonstrates how to call the API from a web application using ``fetch``. Replace ``YOUR_API_KEY`` with your actual API key.
+```js
+async function getDisplayName() {
+  const API_KEY = "YOUR_API_KEY"; // Replace with your actual API key
+  const BASE_URL = "https://theslow.net/api"; // All APIs are accessible via this base URL
+
+  try {
+    const response = await fetch(`${BASE_URL}/account/get-display-name`, {
+      method: 'GET',
+      headers: {
+        'X-API-KEY': API_KEY, // Pass API key in header
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      // Handle HTTP errors (e.g., 401 Unauthorized, 500 Internal Server Error)
+      const errorData = await response.json();
+      console.error('API Call Failed:', response.status, errorData.error);
+      return null;
+    }
+
+    const data = await response.json();
+    console.log('Display Name:', data.display_name);
+    return data.display_name;
+  } catch (error) {
+    console.error('An unexpected error occurred:', error);
+    return null;
+  }
+}
+
+// Example usage:
+// getDisplayName();
+```
+
+#### Expected Response
+If the call is successful and a display name is available, you should receive a JSON response similar to this:
+```json
+{
+  "display_name": "John Doe"
+}
+```
+Or, in case of an authorization error (e.g., invalid API key):
+```json
+{
+  "error": "Unauthorized"
+}
+```
+### What's Next?
+
+Congratulations! You've successfully made your first API call using your API key. Now you're ready to:
+
+- **Explore the API Reference:** Dive deeper into all available API endpoints.
+
+- **Read Guides:** Learn about specific use cases and advanced topics in our Guides section.
+
+- **Understand Core Concepts:** Get a better grasp of our platform's underlying principles.
+
+If you encounter any issues, don't hesitate to reach out to our [support team](https://theslow.net/dashboard#support).

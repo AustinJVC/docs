@@ -1,0 +1,76 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "name": "TheSlowNet",
+  "theme": "mint",
+  "colors": {
+    "primary": "#8C00FF",
+    "light": "#A233FF",
+    "dark": "#7500D1"
+  },
+  "favicon": "/favicon.svg",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Getting Started",
+        "groups": [
+          {
+            "group": "Introduction",
+            "pages": [
+              "quickstart",
+              "authentication",
+              "error-handling",
+              "rate-limits",
+              "making-requests"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Account APIs",
+            "pages": [
+              "/apis/account-management/get-display-name",
+              "change-display-name"
+            ]
+          },
+          {
+            "group": "Email Forwarding APIs",
+            "pages": [
+              ""
+            ]
+          },
+          {
+            "group": "Slowsite Configuration APIs",
+            "pages": [
+              ""
+            ]
+          },
+          {
+            "group": "Slowhook (Discord Webhook) APIs",
+            "pages": [
+              ""
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Tutorials",
+            "pages": [
+              "guides/authentication-guide",
+              "guides/error-handling"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

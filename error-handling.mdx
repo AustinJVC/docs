@@ -1,0 +1,116 @@
+---
+title: Error Handling
+description: When interacting with any API, it's crucial to understand how to interpret and handle errors. Our API uses standard HTTP status codes to indicate the success or failure of a request, along with a consistent JSON error response format to provide more specific details.
+---
+
+## HTTP Status Codes
+Here are the common HTTP status codes you might encounter:
+
+``200 OK``: The request was successful.
+
+``201 Created``: The request was successful, and a new resource was created.
+
+``204 No Content``: The request was successful, but there is no content to return (e.g., a successful deletion).
+
+``400 Bad Request``: The request was malformed or invalid (e.g., missing required parameters, invalid JSON format).
+
+``401 Unauthorized``: Authentication failed or was not provided (e.g., missing or invalid X-API-KEY).
+
+``403 Forbidden``: The authenticated user does not have the necessary permissions to access the resource or perform the action.
+
+``404 Not Found``: The requested resource could not be found.
+
+``405 Method Not Allowed``: The HTTP method used is not supported for the requested resource (e.g., trying to POST to a GET-only endpoint).
+
+``429 Too Many Requests``: You have exceeded the API's rate limits.
+
+``500 Internal Server Error``: A generic error occurred on our server. This usually indicates an unexpected issue on our end.
+
+## Error Response Structure
+When an error occurs (typically for 4xx or 5xx status codes), our API will return a JSON object with the following structure:
+```json
+{
+  "error": "Unauthorized",
+}
+```
+``error``: A concise message explaining what went wrong.
+
+## Handling Errors in Your Code
+It's good practice to check the HTTP status code of the response and parse the error body to provide meaningful feedback to your users or for debugging.
+
+### Using Python
+```python
+import requests
+
+API_KEY = "YOUR_API_KEY"
+BASE_URL = "https://theslow.net/api"
+
+headers = {
+    "X-API-KEY": API_KEY,
+    "Content-Type": "application/json"
+}
+
+# Example: Making a request that might result in an error (e.g., invalid endpoint)
+try:
+    response = requests.get(f"{BASE_URL}/non-existent-endpoint", headers=headers)
+    response.raise_for_status() # This will raise an HTTPError for 4xx/5xx responses
+    print("Request successful:", response.json())
+except requests.exceptions.HTTPError as http_err:
+    print(f"HTTP error occurred: {http_err}")
+    if response.status_code == 401:
+        print("Authentication failed. Check your API key.")
+    elif response.status_code == 400:
+        error_data = response.json()
+        print(f"Bad Request: {error_data.get('error')}")
+        if 'details' in error_data:
+            print(f"Details: {error_data['details']}")
+    else:
+        print(f"Server responded with status {response.status_code}: {response.text}")
+except requests.exceptions.ConnectionError as conn_err:
+    print(f"Connection error occurred: {conn_err}")
+except Exception as err:
+    print(f"An unexpected error occurred: {err}")
+```
+### Using JavaScript (Browser fetch)
+```js
+async function makeErrorProneCall() {
+  const API_KEY = "YOUR_API_KEY";
+  const BASE_URL = "https://theslow.net/api";
+
+  try {
+    const response = await fetch(`${BASE_URL}/non-existent-endpoint`, { // Example of a bad request
+      method: 'GET',
+      headers: {
+        'X-API-KEY': API_KEY,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('API Call Failed with status:', response.status);
+      console.error('Error:', errorData.error);
+      if (errorData.code) {
+        console.error('Error Code:', errorData.code);
+      }
+      if (errorData.details) {
+        console.error('Error Details:', errorData.details);
+      }
+      return null;
+    }
+
+    const data = await response.json();
+    console.log('Request successful:', data);
+    return data;
+  } catch (error) {
+    console.error('An unexpected network or parsing error occurred:', error);
+    return null;
+  }
+}
+
+// Example usage:
+// makeErrorProneCall();
+```
+
+## Need Further Assistance?
+If you have any questions about error handling or encounter unexpected errors, please don't hesitate to reach out to our [support team](https://theslow.net/dashboard#support).

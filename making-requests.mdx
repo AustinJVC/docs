@@ -1,0 +1,165 @@
+---
+title: Making Requests
+description: This guide provides a foundational understanding of how to construct and send requests to our API. All interactions with our API are done via standard HTTP methods over HTTPS.
+---
+
+## Base URL
+All API endpoints are accessible via the following base URL:
+
+``https://theslow.net/api``
+
+You will append the specific endpoint path to this base URL for your requests.
+
+## Request Methods (Verbs)
+Our API utilizes standard HTTP methods (also known as verbs) to indicate the desired action for a given resource.
+
+- ``GET``: Retrieve data from the server. ``GET`` requests should not have a request body and should be idempotent (making the same request multiple times has the same effect as making it once).
+
+    - **Example**: Fetching a list of users.
+
+- ``POST``: Submit data to the server, typically to create a new resource.
+
+    - **Example**: Creating a new user.
+
+- ``PUT``: Update an existing resource, or create it if it doesn't exist. ``PUT`` requests typically require the entire resource to be sent in the request body.
+
+    - **Example**: Replacing all data for a specific user.
+
+- ``PATCH``: Partially update an existing resource. Only the fields to be updated are sent in the request body.
+
+    - **Example**: Updating only a user's email address.
+
+- ``DELETE``: Remove a resource from the server.
+
+    - **Example**: Deleting a specific user.
+
+## Authentication
+As detailed in the Authentication guide, all requests must include your API key in the X-API-KEY HTTP header.
+
+``X-API-KEY: YOUR_API_KEY_HERE``
+
+## Request Headers
+Beyond authentication, common headers you'll use include:
+
+- Content-Type: application/json``: Used for ``POST``, ``PUT``, and ``PATCH`` requests when sending a JSON payload in the request body.
+
+- ``Accept: application/json``: (Optional but recommended) Indicates that your client prefers to receive responses in ``JSON`` format.
+
+## Request Parameters
+There are several ways to pass data to our API:
+
+### 1. Path Parameters
+Used to identify a specific resource within the URL path. They are part of the endpoint itself.
+
+- **Example Endpoint**: ``/users/{user_id}``
+
+**Request**: ``GET https://theslow.net/api/users/123`` (where ``123`` is the ``user_id``)
+
+### 2. Query Parameters
+Used to filter, sort, or paginate data, and are appended to the URL after a ?. Multiple parameters are separated by &.
+
+- **Example Endpoint**: ``/users?status=active&limit=10``
+
+- **Request**: GET ``https://theslow.net/api/users?status=active&limit=10``
+
+### 3. Request Body (JSON)
+Used for ``POST``, ``PUT``, and ``PATCH`` requests to send complex data structures, typically in ``JSON`` format. The ``Content-Type: application/json`` header is required for this.
+
+- **Example (Creating a User)**:
+
+    - **Method**: ``POST``
+
+    - **Endpoint**: ``https://theslow.net/api/users``
+
+   - **Request Body**:
+```json
+{
+  "name": "Jane Doe",
+  "email": "jane.doe@example.com"
+}
+```
+## Example: Creating a Resource (POST)
+Let's put it all together with an example of creating a new user.
+
+#### Using cURL (Command Line)
+```bash
+curl -X POST \
+  'https://theslow.net/api/users' \
+  -H 'X-API-KEY: YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Alice Smith",
+    "email": "alice.smith@example.com"
+  }'
+```
+
+### Using Python
+```python
+import requests
+import json
+
+API_KEY = "YOUR_API_KEY"
+BASE_URL = "https://theslow.net/api"
+
+headers = {
+    "X-API-KEY": API_KEY,
+    "Content-Type": "application/json"
+}
+
+new_user_data = {
+    "name": "Alice Smith",
+    "email": "alice.smith@example.com"
+}
+
+try:
+    response = requests.post(f"{BASE_URL}/users", headers=headers, data=json.dumps(new_user_data))
+    response.raise_for_status()
+    print("User created successfully!")
+    print(response.json())
+except requests.exceptions.RequestException as e:
+    print(f"An error occurred: {e}")
+    if response:
+        print(f"Response status code: {response.status_code}")
+        print(f"Response body: {response.text}")
+```
+#### Using JavaScript (Browser fetch)
+```js
+async function createUser() {
+  const API_KEY = "YOUR_API_KEY";
+  const BASE_URL = "https://theslow.net/api";
+
+  const newUserData = {
+    name: "Alice Smith",
+    email: "alice.smith@example.com"
+  };
+
+  try {
+    const response = await fetch(`${BASE_URL}/users`, {
+      method: 'POST',
+      headers: {
+        'X-API-KEY': API_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newUserData)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Failed to create user:', response.status, errorData.error);
+      return null;
+    }
+
+    const data = await response.json();
+    console.log('User created:', data);
+    return data;
+  } catch (error) {
+    console.error('An unexpected error occurred:', error);
+    return null;
+  }
+}
+
+// Example usage:
+// createUser();
+```
+## Need Further Assistance?
+If you have any questions about making requests or encounter issues, please don't hesitate to reach out to our support team.
