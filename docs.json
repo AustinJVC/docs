@@ -1,102 +1,60 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mint Starter Kit",
-  "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+  "name": "The Slow Net API",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
   },
   "favicon": "/favicon.svg",
-  "navigation": {
-    "tabs": [
-      {
-        "tab": "Guides",
-        "groups": [
-          {
-            "group": "Get Started",
-            "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Essentials",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API Reference",
-        "groups": [
-          {
-            "group": "API Documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint Examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
+  "colors": {
+    "light": {
+      "primary": "#6366f1",
+      "background": "#ffffff",
+      "topbar": "#f8fafc",
+      "sidebar": "#f8fafc",
+      "highlight": "#e0e7ff",
+      "text": "#1e293b"
+    },
+    "dark": {
+      "primary": "#6366f1",
+      "background": "#0f172a",
+      "topbar": "#1e293b",
+      "sidebar": "#1e293b",
+      "highlight": "#334155",
+      "text": "#f8fafc"
+    }
+  },
+  "topbarCtaButton": {
+    "name": "Dashboard",
+    "url": "https://theslow.net/dashboard"
+  },
+  "navigation": [
+    {
+      "group": "Introduction",
+      "pages": [
+        "index",
+        "quickstart"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/index",
+        "api-reference/account",
+        "api-reference/email-forwarding",
+        "api-reference/discord-webhooks",
+        "api-reference/site-configuration"
+      ]
+    },
+    {
+      "group": "Resources",
+      "pages": [
+        "development"
       ]
     }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
+  ],
+  "footerSocials": {
+    "github": "https://github.com/your-github-profile",
+    "twitter": "https://twitter.com/your-twitter-handle",
+    "linkedin": "https://linkedin.com/in/your-linkedin-profile"
   }
 }
