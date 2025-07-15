@@ -33,9 +33,15 @@
         "tab": "API Reference",
         "groups": [
           {
+            "group": "Overview",
+            "pages": [
+              "apis/api-reference"
+            ]
+          },
+          {
             "group": "Account APIs",
             "pages": [
-              "/apis/account-management/get-display-name",
+              "apis/account-management/get-display-name",
               "change-display-name"
             ]
           },
