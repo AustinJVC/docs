@@ -1,0 +1,199 @@
+---
+title: Update Display Name
+description: Update the display name of the currently authenticated user.
+---
+
+## Endpoint
+
+```
+POST https://theslow.net/api/account/update-display-name
+```
+
+## Overview
+
+This endpoint allows an authenticated user to update their `display_name`.
+When a display name is updated:
+
+- It is sanitized to enforce lowercase, hyphenated format, and safe characters.
+- Any existing email forwarding is **disabled** and the forwarding address is cleared.
+- If the user previously had email forwarding, their old ImprovMX alias is removed.
+
+An analytics event is also logged for auditing and tracking purposes.
+
+## Authentication
+
+This endpoint requires authentication via an API key.  
+Include your API key in the `X-API-KEY` header for each request:
+
+```
+X-API-KEY: YOUR_API_KEY_HERE
+```
+
+For more details, see the [Authentication Guide](../../authentication).
+
+## Request Body
+
+| Field         | Type   | Required | Description                                     |
+|---------------|--------|----------|-------------------------------------------------|
+| `display_name`| string | ✅ yes   | The new desired display name. Must be at least 3 characters and pass sanitization checks.|
+
+## Rules & Validation
+
+- The `display_name` will be:
+  - Converted to lowercase.
+  - Spaces replaced with hyphens.
+  - Non-alphanumeric characters (except hyphens) removed.
+- Must be at least **3 characters long** after sanitization.
+- Must be **unique** across all profiles and not in the reserved names list.
+
+If the input fails these checks, you’ll receive detailed error messages.
+
+## Request Examples
+
+### cURL
+
+```bash
+curl -X POST   'https://theslow.net/api/account/update-display-name'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'   -d '{"display_name": "new-username"}'
+```
+
+### Python
+
+```python
+import requests
+
+BASE_URL = "https://theslow.net/api"
+API_KEY = "YOUR_API_KEY"
+payload = {"display_name": "new-username"}
+
+headers = {
+    "X-API-KEY": API_KEY,
+    "Content-Type": "application/json"
+}
+
+response = requests.post(
+    f"{BASE_URL}/account/update-display-name",
+    headers=headers,
+    json=payload
+)
+
+if response.ok:
+    print("✅ Success:", response.json())
+else:
+    print("❌ Error:", response.status_code, response.json())
+```
+
+### JavaScript (Fetch)
+
+```js
+async function updateDisplayName(newName) {
+  try {
+    const response = await fetch("/api/account/update-display-name", {
+      method: "POST",
+      headers: {
+        "X-API-KEY": "YOUR_API_KEY",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ display_name: newName })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Failed to update:", errorData.error);
+      return;
+    }
+
+    const data = await response.json();
+    console.log("Name updated:", data.message);
+  } catch (err) {
+    console.error("Unexpected error:", err);
+  }
+}
+
+// Example usage:
+// updateDisplayName("new-username");
+```
+
+## Responses
+
+### 200 OK
+
+Successfully updated the display name.
+
+```json
+{
+  "success": true,
+  "message": "Name updated. Email forwarding has been disabled."
+}
+```
+
+### 400 Bad Request
+
+Invalid or missing input.
+
+```json
+{
+  "error": "A display name is required."
+}
+```
+
+```json
+{
+  "error": "SlowNet Name must be at least 3 characters long."
+}
+```
+
+```json
+{
+  "error": "The name "bad name!" is not valid. Try "bad-name" instead."
+}
+```
+
+### 401 Unauthorized
+
+User is not authenticated.
+
+```json
+{
+  "error": "Unauthorized"
+}
+```
+
+### 404 Not Found
+
+Profile could not be found (possible stale session).
+
+```json
+{
+  "error": "Could not find your profile to update."
+}
+```
+
+### 409 Conflict
+
+The requested display name is reserved or already taken.
+
+```json
+{
+  "error": "This SlowNet name is not available."
+}
+```
+
+```json
+{
+  "error": "This SlowNet name is already taken."
+}
+```
+
+### 500 Internal Server Error
+
+A server-side error occurred.
+
+```json
+{
+  "error": "An internal server error occurred."
+}
+```
+
+## Need Help?
+
+Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).

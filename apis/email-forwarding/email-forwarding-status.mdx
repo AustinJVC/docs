@@ -1,0 +1,147 @@
+---
+title: Get Email Forwarding Status
+description: Retrieve the current email forwarding status and forwarding address of the authenticated user.
+---
+
+## Endpoint
+
+```
+GET https://theslow.net/api/email-forwarding/email-forwarding-status
+```
+
+## Overview
+
+This endpoint allows you to check if email forwarding is currently enabled on your account, and view the forwarding email address if set.
+
+## Authentication
+
+This endpoint requires authentication via an API key.  
+Include your API key in the `X-API-KEY` header for each request:
+
+```
+X-API-KEY: YOUR_API_KEY_HERE
+```
+
+For more details, see the [Authentication Guide](../../authentication).
+
+## Parameters
+
+✅ **None**  
+This endpoint does not require any path, query, or request body parameters.
+
+## Request Examples
+
+### cURL
+
+```bash
+curl -X GET   'https://theslow.net/api/email-forwarding/email-forwarding-status'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'
+```
+
+### Python
+
+```python
+import requests
+
+BASE_URL = "https://theslow.net/api"
+API_KEY = "YOUR_API_KEY"
+
+headers = {
+    "X-API-KEY": API_KEY,
+    "Content-Type": "application/json"
+}
+
+response = requests.get(
+    f"{BASE_URL}/email-forwarding/email-forwarding-status",
+    headers=headers
+)
+
+if response.ok:
+    print("✅ Status:", response.json())
+else:
+    print("❌ Error:", response.status_code, response.json())
+```
+
+### JavaScript (Fetch)
+
+```js
+async function getForwardingStatus() {
+  try {
+    const response = await fetch("/api/email-forwarding/email-forwarding-status", {
+      method: "GET",
+      headers: {
+        "X-API-KEY": "YOUR_API_KEY",
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Failed to fetch:", errorData.error);
+      return;
+    }
+
+    const data = await response.json();
+    console.log("Forwarding Status:", data);
+  } catch (err) {
+    console.error("Unexpected error:", err);
+  }
+}
+
+// Example usage:
+// getForwardingStatus();
+```
+
+## Responses
+
+### 200 OK
+
+Returns the forwarding status and forwarding email.
+
+```json
+{
+  "enabled": true,
+  "email": "you@customdomain.com"
+}
+```
+
+```json
+{
+  "enabled": false,
+  "email": ""
+}
+```
+
+### 401 Unauthorized
+
+User is not authenticated.
+
+```json
+{
+  "error": "Unauthorized: You must be logged in."
+}
+```
+
+### 500 Internal Server Error
+
+A server-side error occurred.
+
+```json
+{
+  "error": "An internal server error occurred."
+}
+```
+
+### Note on 404 from DB
+
+If your profile does not yet exist in the database, the API gracefully returns:
+
+```json
+{
+  "enabled": false,
+  "email": ""
+}
+```
+
+## Need Help?
+
+Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).

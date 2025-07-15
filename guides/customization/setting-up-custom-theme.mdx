@@ -1,0 +1,82 @@
+---
+title: Setting Up a Custom Theme
+description: Customize your SlowNet site with your own colors, fonts, and style.
+---
+
+## Overview
+
+SlowNet lets you fully customize the look of your page.  
+You can pick a built-in theme by `theme_id`, or define your own with `custom_theme`.
+
+## Using a built-in theme
+
+To apply a pre-made theme, send the `theme_id`. For example:
+
+```json
+{
+  "theme_id": "0cd5197e-5f08-428d-bb9d-8de85237b29b"
+}
+```
+### Available pre-built themes
+
+| Theme ID                                   | Name           | Description                  | Colors                                              |
+|--------------------------------------------|----------------|------------------------------|-----------------------------------------------------|
+| `0cd5197e-5f08-428d-bb9d-8de85237b29b`     | Deep Space     | A stylish deep space theme.  | textColor: #d1d5db, accentColor: #6366f1, backgroundColor: #111827 |
+| `20d5da2e-1f90-4af3-be8e-351b012931a0`     | Ocean Breeze   | A stylish ocean breeze theme.| textColor: #ecfeff, accentColor: #06b6d4, backgroundColor: #0f766e |
+| `905e38ac-d31d-4bc3-b81d-a79554f2d8c8`     | Forest Canopy  | A stylish forest canopy theme.| textColor: #dbeafe, accentColor: #10b981, backgroundColor: #1f2937 |
+| `d479a358-b59f-4292-8b95-3defc6406d55`     | Lavender Haze  | A stylish lavender haze theme.| textColor: #f3e8ff, accentColor: #a855f7, backgroundColor: #4c1d95 |
+| `e842a2a1-2ac6-49a7-bdc5-61b086ccb5aa`     | Desert Sunset  | A stylish desert sunset theme.| textColor: #fff7ed, accentColor: #ef4444, backgroundColor: #451a03 |
+| `ee395d42-7305-4d3d-aff0-0634a28ed59b`     | Midnight Ember | A stylish midnight ember theme.| textColor: #e0e7ff, accentColor: #f59e0b, backgroundColor: #1a202c |
+| `f3edb4d4-6592-41a3-9310-07e21b9e6e0d`     | Minimal Light  | A stylish minimal light theme.| textColor: #1f2937, accentColor: #ef4444, backgroundColor: #f9fafb |
+
+
+## Using a custom theme
+
+If you want full control, omit `theme_id` and pass a `custom_theme` object.
+
+### Example
+
+```json
+{
+  "custom_theme": {
+    "background_color": "#0d0d0d",
+    "primary_color": "#3FF5B5",
+    "text_color": "#ffffff",
+    "font_family": "sans-serif",
+    "accent_color": "#28D6FF"
+  }
+}
+```
+
+This will override any preset theme.
+
+## Full payload
+
+```bash
+curl -X POST   'https://theslow.net/api/slownetsite/update-site-configuration'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'   -d '{
+    "bio": "Custom theme time!",
+    "custom_theme": {
+      "background_color": "#0d0d0d",
+      "primary_color": "#3FF5B5",
+      "text_color": "#ffffff",
+      "font_family": "sans-serif",
+      "accent_color": "#28D6FF"
+    },
+    "blocks": [
+      { "type": "text", "content": "Welcome to my customized page.", "enabled": true }
+    ]
+  }'
+```
+
+## Tips
+
+- If `theme_id` is set, `custom_theme` is ignored.
+- To go 100% custom, leave `theme_id` empty or null.
+
+## Authentication
+
+See the [Authentication Guide](../../authentication).
+
+## Related
+
+- [Building your SlowNet page](../building-your-slownet-page)

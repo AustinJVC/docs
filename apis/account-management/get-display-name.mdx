@@ -1,0 +1,139 @@
+---
+title: Get Display Name
+description: Retrieve the display name of the currently authenticated user.
+---
+
+## Endpoint
+
+```
+GET https://theslow.net/api/account/get-display-name
+```
+
+## Overview
+
+This endpoint fetches the `display_name` associated with the provided API key.
+
+## Authentication
+
+This endpoint requires an API key. Include it in the `X-API-KEY` header:
+
+```
+X-API-KEY: YOUR_API_KEY_HERE
+```
+
+For more details, see the [Authentication Guide](../../authentication).
+
+## Parameters
+
+✅ **None**  
+This endpoint does not require any path, query, or request body parameters.
+
+## Examples
+
+### cURL
+
+```bash
+curl -X GET   'https://theslow.net/api/account/get-display-name'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'
+```
+
+### Python
+
+```python
+import requests
+
+API_KEY = "YOUR_API_KEY"
+BASE_URL = "https://theslow.net/api"
+
+headers = {
+    "X-API-KEY": API_KEY,
+    "Content-Type": "application/json"
+}
+
+try:
+    response = requests.get(f"{BASE_URL}/account/get-display-name", headers=headers)
+    response.raise_for_status()
+    data = response.json()
+    print("Display Name:", data["display_name"])
+except requests.exceptions.RequestException as e:
+    print("API call failed:", e)
+    if response is not None:
+        print("Status code:", response.status_code)
+        print("Response body:", response.text)
+```
+
+### JavaScript (Fetch API)
+
+```js
+async function getDisplayName() {
+  const API_KEY = "YOUR_API_KEY";
+  const BASE_URL = "https://theslow.net/api";
+
+  try {
+    const response = await fetch(`${BASE_URL}/account/get-display-name`, {
+      method: "GET",
+      headers: {
+        "X-API-KEY": API_KEY,
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("API Call Failed:", response.status, errorData.error);
+      return null;
+    }
+
+    const data = await response.json();
+    console.log("Display Name:", data.display_name);
+    return data.display_name;
+  } catch (error) {
+    console.error("Unexpected error:", error);
+    return null;
+  }
+}
+
+// Example usage:
+// getDisplayName();
+```
+
+## Responses
+
+### 200 OK
+
+Returns the user’s display name.
+
+```json
+{
+  "display_name": "JohnDoe"
+}
+```
+
+### 401 Unauthorized
+
+Occurs if authentication fails (e.g., missing or invalid API key).
+
+```json
+{
+  "error": "Unauthorized"
+}
+```
+
+### 500 Internal Server Error
+
+Occurs due to server-side issues (e.g., database problems or unexpected exceptions).
+
+```json
+{
+  "error": "Database error while fetching profile."
+}
+```
+
+```json
+{
+  "error": "An internal server error occurred."
+}
+```
+
+## Need Help?
+
+Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).

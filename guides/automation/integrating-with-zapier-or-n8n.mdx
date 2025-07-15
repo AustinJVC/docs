@@ -1,0 +1,53 @@
+---
+title: Integrating with Zapier or n8n
+description: Use Zapier or n8n to automate your SlowNet updates with no code.
+---
+
+## Overview
+
+Want to update your SlowNet page whenever something happens — like a new RSS post, or a new calendar event?  
+You can use tools like **Zapier** or **n8n** to make HTTP requests to your SlowNet API.
+
+## Example with Zapier Webhooks
+
+1. Create a Zap with any trigger (like new Google Calendar event).
+2. Add an **Action**: Webhooks by Zapier → POST.
+3. Set up the request:
+
+- **URL:** `https://theslow.net/api/slownetsite/update-site-configuration`
+- **Method:** POST
+- **Headers:**  
+  - `X-API-KEY: YOUR_API_KEY`  
+  - `Content-Type: application/json`
+- **Data:**
+
+```json
+{
+  "mood": "📅 Busy day!"
+}
+```
+
+## Example with n8n HTTP Request
+
+1. Use any trigger you want (like new Notion page).
+2. Add an **HTTP Request** node:
+
+- Method: POST
+- URL: `https://theslow.net/api/slownetsite/update-site-configuration`
+- Headers:
+  - `X-API-KEY: YOUR_API_KEY`
+  - `Content-Type: application/json`
+- Body:
+```json
+{
+  "bio": "Updated from n8n!"
+}
+```
+
+## Authentication
+
+See the [Authentication Guide](../../authentication).
+
+## Related
+
+- [Building your SlowNet page](../building-your-slownet-page)

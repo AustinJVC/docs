@@ -1,0 +1,62 @@
+---
+title: Storing and Rotating API Keys
+description: Keep your SlowNet API key safe and rotate it if it ever gets compromised.
+---
+
+## Overview
+
+Your `X-API-KEY` gives full access to your SlowNet account via the API.  
+Treat it like a password: **keep it secret, keep it safe.**
+
+## Storing your API key
+
+### Locally (dev environment)
+
+Use a `.env` file (with something like dotenv) so your key isn’t hard-coded in scripts.
+
+```
+SLOWNET_API_KEY=your_long_key_here
+```
+
+Then reference it in your code:
+
+```javascript
+const apiKey = process.env.SLOWNET_API_KEY;
+```
+
+Or in bash:
+
+```bash
+curl -H "X-API-KEY: $SLOWNET_API_KEY" ...
+```
+
+> ✅ **Never commit your `.env` to Git.**  
+Add it to your `.gitignore`.
+
+### In CI/CD (GitHub Actions)
+
+Store it as a secret in your repo settings under **Settings → Secrets and variables → Actions**.
+
+Then reference it in your workflow:
+
+```yaml
+- run: curl -H "X-API-KEY: ${{ secrets.SLOWNET_API_KEY }}" ...
+```
+
+## Rotating your API key
+
+If you think your key might have been leaked, you’ll want to rotate it:
+
+- Delete the old key (or use the dashboard’s rotate feature when available).
+- Create a new one and update your `.env` or CI/CD secrets.
+
+If someone else gains access to your key, they can change your site or forward your emails. So rotate it immediately if you suspect compromise.
+
+## Authentication
+
+See the [Authentication Guide](../../authentication).
+
+## Related
+
+- [Automating with GitHub Actions](../automating-with-github-actions)
+- [Integrating with Zapier or n8n](../integrating-with-zapier-or-n8n)

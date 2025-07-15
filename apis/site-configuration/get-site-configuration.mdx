@@ -1,0 +1,152 @@
+---
+title: Get Site Configuration
+description: Retrieve your SlowNet Site configuration, profile blocks, and available themes.
+---
+
+## Endpoint
+
+```
+GET https://theslow.net/api/slownetsite/get-site-configuration
+```
+
+## Overview
+
+This endpoint returns the full configuration needed to render and manage your SlowNet site, including:
+
+- Your site's bio, avatar, theme settings, location, mood, and selected theme details.
+- All your profile content blocks, ordered by their position.
+- A list of all available themes you can choose from.
+
+## Authentication
+
+This endpoint requires authentication via an API key.
+Include your API key in the `X-API-KEY` header for each request:
+
+```
+X-API-KEY: YOUR_API_KEY_HERE
+```
+
+For more details, see the [Authentication Guide](../../authentication).
+
+## Parameters
+
+✅ **None**
+This endpoint does not require any path, query, or request body parameters.
+
+## Request Examples
+
+### cURL
+
+```bash
+curl -X GET   'https://theslow.net/api/slownetsite/get-site-configuration'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'
+```
+
+### Python
+
+```python
+import requests
+
+BASE_URL = "https://theslow.net/api"
+API_KEY = "YOUR_API_KEY"
+
+headers = {
+    "X-API-KEY": API_KEY,
+    "Content-Type": "application/json"
+}
+
+response = requests.get(
+    f"{BASE_URL}/slownetsite/get-site-configuration",
+    headers=headers
+)
+
+if response.ok:
+    print("✅ Site Configuration:", response.json())
+else:
+    print("❌ Error:", response.status_code, response.json())
+```
+
+### JavaScript (Fetch)
+
+```js
+async function getSiteConfiguration() {
+  try {
+    const response = await fetch("/api/slownetsite/get-site-configuration", {
+      method: "GET",
+      headers: {
+        "X-API-KEY": "YOUR_API_KEY",
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Failed to fetch:", errorData.error);
+      return;
+    }
+
+    const data = await response.json();
+    console.log("Site Config:", data);
+  } catch (err) {
+    console.error("Unexpected error:", err);
+  }
+}
+
+// Example usage:
+// getSiteConfiguration();
+```
+
+## Responses
+
+### 200 OK
+
+Returns the site configuration, blocks, and available themes.
+
+```json
+{
+  "site": {
+    "bio": "Hi, I'm Austin.",
+    "avatar_url": "https://theslow.net/storage/avatar.png",
+    "custom_theme": { /* custom theme object */ },
+    "theme_id": 1,
+    "location": "Calgary",
+    "mood": "🌱",
+    "themes": {
+      "id": 1,
+      "name": "Minimal Green",
+      "settings": { /* theme settings */ }
+    }
+  },
+  "blocks": [
+    { "id": 12, "type": "text", "content": "Welcome to my SlowNet!" },
+    { "id": 13, "type": "link", "url": "https://github.com" }
+  ],
+  "availableThemes": [
+    { "id": 1, "name": "Minimal Green", "settings": { /* settings */ } },
+    { "id": 2, "name": "Dark Ocean", "settings": { /* settings */ } }
+  ]
+}
+```
+
+### 401 Unauthorized
+
+User is not authenticated.
+
+```json
+{
+  "error": "Unauthorized"
+}
+```
+
+### 500 Internal Server Error
+
+A server-side error occurred fetching your site configuration.
+
+```json
+{
+  "error": "Could not fetch site configuration."
+}
+```
+
+## Need Help?
+
+Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).

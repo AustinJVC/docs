@@ -1,0 +1,78 @@
+---
+title: Using Slowhooks to Post to Discord
+description: Learn to use Slowhooks to send or edit Discord webhook messages from your SlowNet.
+---
+
+## Overview
+
+Slowhooks let you post directly to Discord channels using webhooks — perfect for sending updates, notifications, or even little daily logs from your SlowNet.
+
+You can use the same endpoint to **send new messages** (POST) or **edit existing messages** (PATCH).
+
+## Sending a new message
+
+Use a `POST` request with your Discord webhook URL and the message payload.
+
+### Example payload
+
+```json
+{
+  "webhookUrl": "https://discord.com/api/webhooks/123/abc",
+  "payload": {
+    "content": "Hello from SlowNet!",
+    "embeds": [
+      {
+        "title": "My Embed",
+        "description": "This is an embed sent from SlowNet."
+      }
+    ]
+  }
+}
+```
+
+### Example cURL
+
+```bash
+curl -X POST   'https://theslow.net/api/slowhooks/send-discord-webhook'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'   -d '{
+    "webhookUrl": "https://discord.com/api/webhooks/123/abc",
+    "payload": {
+      "content": "Hello from SlowNet!"
+    }
+  }'
+```
+
+## Editing an existing message
+
+Use a `PATCH` request with the same `webhookUrl` plus the `messageId` of the message you want to edit.
+
+### Example payload
+
+```json
+{
+  "webhookUrl": "https://discord.com/api/webhooks/123/abc",
+  "messageId": "987654321",
+  "payload": {
+    "content": "Updated message from SlowNet."
+  }
+}
+```
+
+### Example cURL
+
+```bash
+curl -X PATCH   'https://theslow.net/api/slowhooks/send-discord-webhook'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'   -d '{
+    "webhookUrl": "https://discord.com/api/webhooks/123/abc",
+    "messageId": "987654321",
+    "payload": {
+      "content": "Updated message from SlowNet."
+    }
+  }'
+```
+
+## Authentication
+
+See the [Authentication Guide](../../authentication).
+
+## Related
+
+- [Building your SlowNet page](../building-your-slownet-page)

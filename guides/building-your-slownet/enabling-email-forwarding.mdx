@@ -1,0 +1,35 @@
+---
+title: Enabling Email Forwarding
+description: Learn how to enable @theslow.net email forwarding for your SlowNet name.
+---
+
+## Overview
+
+With SlowNet, you can forward emails sent to your unique `@theslow.net` address to your personal inbox.
+
+## Step 1: Set a display name
+
+Use the `/api/account/update-display-name` endpoint to pick your SlowNet name:
+
+```bash
+curl -X POST   'https://theslow.net/api/account/update-display-name'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'   -d '{"display_name": "mycoolname"}'
+```
+
+## Step 2: Enable forwarding
+
+```bash
+curl -X POST   'https://theslow.net/api/email-forwarding/email-forwarding-toggle'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'   -d '{"enabled": true, "email": "you@example.com"}'
+```
+
+## Step 3: Confirm
+
+Emails sent to `mycoolname@theslow.net` will now arrive in your personal inbox.
+
+## Authentication
+
+See the [Authentication Guide](../../authentication).
+
+## Related
+
+- [Update your display name](../../api/account/update-display-name)
+- [Toggle email forwarding](../../api/email-forwarding/email-forwarding-toggle)

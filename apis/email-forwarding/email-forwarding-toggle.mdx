@@ -1,0 +1,166 @@
+---
+title: Toggle Email Forwarding
+description: Enable or disable email forwarding for your SlowNet alias, and set the forwarding address.
+---
+
+## Endpoint
+
+```
+POST https://theslow.net/api/email-forwarding/email-forwarding-toggle
+```
+
+## Overview
+
+This endpoint allows you to enable or disable email forwarding for your SlowNet alias.
+When enabling, it synchronizes with our email forwarding provider (ImprovMX), updates your SlowNet profile, and syncs with Brevo for contact management.
+
+## Authentication
+
+This endpoint requires authentication via an API key.
+Include your API key in the `X-API-KEY` header for each request:
+
+```
+X-API-KEY: YOUR_API_KEY_HERE
+```
+
+For more details, see the [Authentication Guide](../../authentication).
+
+## Request Body
+
+| Field      | Type    | Required | Description                                                    |
+|------------|---------|----------|----------------------------------------------------------------|
+| `enabled`  | boolean | ✅ yes   | Whether to enable (`true`) or disable (`false`) forwarding.    |
+| `email`    | string  | ✅ when enabling | The email address to forward to. Required when `enabled` is `true`. |
+
+## Request Examples
+
+### cURL
+
+```bash
+curl -X POST   'https://theslow.net/api/email-forwarding/email-forwarding-toggle'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'   -d '{"enabled": true, "email": "you@example.com"}'
+```
+
+### Python
+
+```python
+import requests
+
+BASE_URL = "https://theslow.net/api"
+API_KEY = "YOUR_API_KEY"
+
+headers = {
+    "X-API-KEY": API_KEY,
+    "Content-Type": "application/json"
+}
+
+payload = {
+    "enabled": True,
+    "email": "you@example.com"
+}
+
+response = requests.post(
+    f"{BASE_URL}/email-forwarding/email-forwarding-toggle",
+    headers=headers,
+    json=payload
+)
+
+if response.ok:
+    print("✅ Success:", response.json())
+else:
+    print("❌ Error:", response.status_code, response.json())
+```
+
+### JavaScript (Fetch)
+
+```js
+async function toggleForwarding(enabled, email) {
+  try {
+    const response = await fetch("/api/email-forwarding/email-forwarding-toggle", {
+      method: "POST",
+      headers: {
+        "X-API-KEY": "YOUR_API_KEY",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ enabled, email })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Failed to toggle:", errorData.error);
+      return;
+    }
+
+    const data = await response.json();
+    console.log("Toggle result:", data);
+  } catch (err) {
+    console.error("Unexpected error:", err);
+  }
+}
+
+// Example usage:
+// toggleForwarding(true, "you@example.com");
+```
+
+## Responses
+
+### 200 OK
+
+Indicates the forwarding setting was successfully updated.
+
+```json
+{
+  "success": true
+}
+```
+
+### 400 Bad Request
+
+Invalid input, such as missing email when enabling.
+
+```json
+{
+  "error": "A valid email address is required to enable forwarding."
+}
+```
+
+### 401 Unauthorized
+
+User is not authenticated.
+
+```json
+{
+  "error": "Unauthorized: You must be logged in."
+}
+```
+
+### 404 Not Found
+
+Occurs if the user does not have a profile yet.
+
+```json
+{
+  "error": "Your profile could not be found. Please set a SlowNet Name first."
+}
+```
+
+### 500 Internal Server Error
+
+A server-side error occurred.
+
+```json
+{
+  "error": "Failed to synchronize with the email forwarding service."
+}
+```
+
+or
+
+```json
+{
+  "error": "An internal server error occurred."
+}
+```
+
+## Need Help?
+
+Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).

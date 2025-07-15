@@ -1,35 +1,30 @@
 {
   "$schema": "https://mintlify.com/docs.json",
+  "name": "TheSlowNet",
   "theme": "mint",
-  "name": "Mint Starter Kit",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#8C00FF",
+    "light": "#A233FF",
+    "dark": "#7500D1"
   },
   "favicon": "/favicon.svg",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Getting Started",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "Introduction",
             "pages": [
-              "index",
               "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Essentials",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "authentication",
+              "error-handling",
+              "rate-limits",
+              "making-requests"
             ]
           }
         ]
@@ -38,65 +33,86 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Overview",
             "pages": [
-              "api-reference/introduction"
+              "apis/api-reference"
             ]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Account APIs",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "apis/account-management/get-display-name",
+              "apis/account-management/update-display-name"
+            ]
+          },
+          {
+            "group": "Email Forwarding APIs",
+            "pages": [
+              "apis/email-forwarding/email-forwarding-status",
+              "apis/email-forwarding/email-forwarding-toggle"
+            ]
+          },
+          {
+            "group": "Slowsite Configuration APIs",
+            "pages": [
+              "apis/site-configuration/get-site-configuration",
+              "apis/site-configuration/get-site-status",
+              "apis/site-configuration/toggle-site-visibility",
+              "apis/site-configuration/update-site-configuration"
+            ]
+          },
+          {
+            "group": "Slowhook (Discord Webhook) APIs",
+            "pages": [
+              "apis/discord-webhooks/send-discord-webhook"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Building Your SlowNet",
+            "pages": [
+              "guides/building-your-slownet/building-your-slownet-page",
+              "guides/building-your-slownet/enabling-email-forwarding",
+              "guides/building-your-slownet/minimalist-link-site"
+            ]
+          },
+          {
+            "group": "Customization",
+            "pages": [
+              "guides/customization/setting-up-custom-theme"
+            ]
+          },
+          {
+            "group": "Automation",
+            "pages": [
+              "guides/automation/automating-with-github-actions",
+              "guides/automation/integrating-with-zapier-or-n8n"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "guides/integrations/using-slowhooks-to-post-to-discord"
+            ]
+          },
+          {
+            "group": "Security",
+            "pages": [
+              "guides/security/storing-and-rotating-api-keys"
+            ]
+          },
+          {
+            "group": "Troubleshooting",
+            "pages": [
+              "guides/troubleshooting/debugging-common-api-errors"
             ]
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
+    ]
   }
 }
