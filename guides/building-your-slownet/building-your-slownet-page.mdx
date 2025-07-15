@@ -1,0 +1,64 @@
+---
+title: Building Your SlowNet Page
+description: Get started by creating your personalized SlowNet page with bio, avatar, mood, and blocks.
+---
+
+## Overview
+
+This guide walks you through building your SlowNet page from scratch — including setting up your bio, avatar, location, mood, and adding profile blocks.
+
+## Prerequisites
+
+- Your API key (`X-API-KEY`) from the dashboard.
+
+## Step 1: Set your bio, avatar, mood, and location
+
+Here's a sample JSON payload for `/api/slownetsite/update-site-configuration`:
+
+```json
+{
+  "bio": "Hey there, welcome to my SlowNet page!",
+  "avatar_url": "https://theslow.net/storage/avatars/me.png",
+  "location": "Calgary",
+  "mood": "🌿",
+  "theme_id": "2"
+}
+```
+
+## Step 2: Add content blocks
+
+Blocks let you add text, links, or other content. Example:
+
+```json
+"blocks": [
+  { "type": "text", "content": "Welcome to my SlowNet page!", "enabled": true },
+  { "type": "link", "content": "https://github.com/myprofile", "enabled": true }
+]
+```
+
+You can include these in the same update request.
+
+## Full cURL example
+
+```bash
+curl -X POST   'https://theslow.net/api/slownetsite/update-site-configuration'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'   -d '{
+    "bio": "Hey there, welcome to my SlowNet page!",
+    "avatar_url": "https://theslow.net/storage/avatars/me.png",
+    "location": "Calgary",
+    "mood": "🌿",
+    "theme_id": "2",
+    "blocks": [
+      { "type": "text", "content": "Welcome to my SlowNet page!", "enabled": true },
+      { "type": "link", "content": "https://github.com/myprofile", "enabled": true }
+    ]
+  }'
+```
+
+## Authentication
+
+See the [Authentication Guide](../../authentication).
+
+## Next steps
+
+- [Enable email forwarding](enabling-email-forwarding)
+- [Create a minimalist Linktree-style page](minimalist-linktree-clone)

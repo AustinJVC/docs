@@ -1,0 +1,176 @@
+---
+title: Send or Edit Discord Webhook
+description: Send new messages or edit existing Discord webhook messages via Slowhooks.
+---
+
+## Endpoint
+
+```
+POST /api/slowhooks/send-discord-webhook
+PATCH /api/slowhooks/send-discord-webhook
+```
+
+## Overview
+
+This endpoint allows you to **send** new Discord webhook messages or **edit** existing ones by providing the webhook URL, message content or embeds, and (for edits) the message ID.
+
+## Authentication
+
+This endpoint requires authentication via an API key.
+Include your API key in the `X-API-KEY` header for each request:
+
+```
+X-API-KEY: YOUR_API_KEY_HERE
+```
+
+For more details, see the [Authentication Guide](../../authentication).
+
+## Request Body
+
+### For sending new messages (`POST`)
+
+| Field       | Type    | Required | Description                                                    |
+|-------------|---------|----------|----------------------------------------------------------------|
+| `webhookUrl`| string  | ✅ yes   | Full Discord webhook URL (must be `https` on `discord.com` or `discordapp.com`). |
+| `payload`   | object  | ✅ yes   | Discord message payload. Must have `content` or at least one `embed`. |
+
+**Example payload:**
+
+```json
+{
+  "webhookUrl": "https://discord.com/api/webhooks/123/abc",
+  "payload": {
+    "content": "Hello from SlowNet!",
+    "embeds": [
+      {
+        "title": "My Embed",
+        "description": "This is an embed description."
+      }
+    ]
+  }
+}
+```
+
+### For editing messages (`PATCH`)
+
+| Field       | Type    | Required | Description                                                    |
+|-------------|---------|----------|----------------------------------------------------------------|
+| `webhookUrl`| string  | ✅ yes   | Discord webhook URL.                                           |
+| `messageId` | string  | ✅ yes   | ID of the Discord message to edit.                             |
+| `payload`   | object  | ✅ yes   | Updated Discord message payload. Same rules as above.          |
+
+## Request Examples
+
+### cURL (send new)
+
+```bash
+curl -X POST   'https://theslow.net/api/slowhooks/send-discord-webhook'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'   -d '{
+    "webhookUrl": "https://discord.com/api/webhooks/123/abc",
+    "payload": {
+      "content": "Hello from SlowNet!"
+    }
+  }'
+```
+
+### cURL (edit existing)
+
+```bash
+curl -X PATCH   'https://theslow.net/api/slowhooks/send-discord-webhook'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'   -d '{
+    "webhookUrl": "https://discord.com/api/webhooks/123/abc",
+    "messageId": "987654321",
+    "payload": {
+      "content": "Updated message content."
+    }
+  }'
+```
+
+### Python (send new)
+
+```python
+import requests
+
+BASE_URL = "https://theslow.net/api"
+API_KEY = "YOUR_API_KEY"
+
+payload = {
+    "webhookUrl": "https://discord.com/api/webhooks/123/abc",
+    "payload": {
+        "content": "Hello from SlowNet!"
+    }
+}
+
+headers = {
+    "X-API-KEY": API_KEY,
+    "Content-Type": "application/json"
+}
+
+response = requests.post(
+    f"{BASE_URL}/slowhooks/send-discord-webhook",
+    headers=headers,
+    json=payload
+)
+
+print(response.json())
+```
+
+## Responses
+
+### 200 OK (new message)
+
+```json
+{
+  "success": true,
+  "message": "Message sent to Discord.",
+  "messageId": "1234567890"
+}
+```
+
+### 200 OK (edited message)
+
+```json
+{
+  "success": true,
+  "message": "Message edited on Discord.",
+  "messageId": "1234567890"
+}
+```
+
+### 400 Bad Request
+
+Missing required fields or invalid webhook URL.
+
+```json
+{
+  "error": "A valid Discord Webhook URL is required and must be from discord.com."
+}
+```
+
+```json
+{
+  "error": "Payload must contain content or at least one embed."
+}
+```
+
+### 401 Unauthorized
+
+Not authenticated.
+
+```json
+{
+  "error": "Unauthorized"
+}
+```
+
+### 500 Internal Server Error
+
+An unexpected issue occurred contacting Discord or updating analytics.
+
+```json
+{
+  "error": "An internal server error occurred while sending the webhook."
+}
+```
+
+## Need Help?
+
+Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).

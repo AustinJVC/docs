@@ -1,0 +1,139 @@
+---
+title: Toggle Site Visibility
+description: Enable or disable your public SlowNet site with a single API call.
+---
+
+## Endpoint
+
+```
+POST https://theslow.net/api/slownetsite/toggle-site-visibility
+```
+
+## Overview
+
+This endpoint toggles the public visibility of your SlowNet site.
+If your site is currently **enabled**, calling this endpoint will **disable** it — and vice versa.
+
+## Authentication
+
+This endpoint requires authentication via an API key.
+Include your API key in the `X-API-KEY` header for each request:
+
+```
+X-API-KEY: YOUR_API_KEY_HERE
+```
+
+For more details, see the [Authentication Guide](../../authentication).
+
+## Parameters
+
+✅ **None**
+This endpoint does not require any path, query, or request body parameters.
+
+## Request Examples
+
+### cURL
+
+```bash
+curl -X POST   'https://theslow.net/api/slownetsite/toggle-site-visibility'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'
+```
+
+### Python
+
+```python
+import requests
+
+BASE_URL = "https://theslow.net/api"
+API_KEY = "YOUR_API_KEY"
+
+headers = {
+    "X-API-KEY": API_KEY,
+    "Content-Type": "application/json"
+}
+
+response = requests.post(
+    f"{BASE_URL}/slownetsite/toggle-site-visibility",
+    headers=headers
+)
+
+if response.ok:
+    print("✅ Site toggled:", response.json())
+else:
+    print("❌ Error:", response.status_code, response.json())
+```
+
+### JavaScript (Fetch)
+
+```js
+async function toggleSiteVisibility() {
+  try {
+    const response = await fetch("/api/slownetsite/toggle-site-visibility", {
+      method: "POST",
+      headers: {
+        "X-API-KEY": "YOUR_API_KEY",
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Failed to toggle:", errorData.error);
+      return;
+    }
+
+    const data = await response.json();
+    console.log("New visibility status:", data.newStatus);
+  } catch (err) {
+    console.error("Unexpected error:", err);
+  }
+}
+
+// Example usage:
+// toggleSiteVisibility();
+```
+
+## Responses
+
+### 200 OK
+
+Returns the new visibility state.
+
+```json
+{
+  "success": true,
+  "newStatus": true
+}
+```
+
+or
+
+```json
+{
+  "success": true,
+  "newStatus": false
+}
+```
+
+### 401 Unauthorized
+
+User is not authenticated.
+
+```json
+{
+  "error": "Unauthorized"
+}
+```
+
+### 500 Internal Server Error
+
+A server-side error occurred.
+
+```json
+{
+  "error": "Could not update site visibility."
+}
+```
+
+## Need Help?
+
+Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).

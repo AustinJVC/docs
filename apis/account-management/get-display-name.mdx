@@ -1,38 +1,47 @@
 ---
-title: Get Display Name 
-description: Retrieves the display name of the currently authenticated user.
+title: Get Display Name
+description: Retrieve the display name of the currently authenticated user.
 ---
+
 ## Endpoint
-``GET https://theslow.net/api/account/get-display-name``
 
-## Description
-This endpoint allows you to fetch the display_name associated with the specified API key.
-
-## Authentication
-This endpoint requires authentication. Include your API key in the X-API-KEY HTTP header for every request.
-
-``X-API-KEY: YOUR_API_KEY_HERE``
-
-For more details on authentication, refer to the [Authentication Guide](authentication).
-
-## Parameters
-This endpoint does not require any path, query, or request body parameters.
-
-## Request Examples
-### Using cURL (Command Line)
-```bash
-curl -X GET \
-  'https://theslow.net/api/account/get-display-name' \
-  -H 'X-API-KEY: YOUR_API_KEY' \
-  -H 'Content-Type: application/json'
+```
+GET https://theslow.net/api/account/get-display-name
 ```
 
-### Using Python
+## Overview
+
+This endpoint fetches the `display_name` associated with the provided API key.
+
+## Authentication
+
+This endpoint requires an API key. Include it in the `X-API-KEY` header:
+
+```
+X-API-KEY: YOUR_API_KEY_HERE
+```
+
+For more details, see the [Authentication Guide](../../authentication).
+
+## Parameters
+
+✅ **None**  
+This endpoint does not require any path, query, or request body parameters.
+
+## Examples
+
+### cURL
+
+```bash
+curl -X GET   'https://theslow.net/api/account/get-display-name'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'
+```
+
+### Python
+
 ```python
 import requests
-import json
 
-API_KEY = "YOUR_API_KEY" # Replace with your actual API key
+API_KEY = "YOUR_API_KEY"
 BASE_URL = "https://theslow.net/api"
 
 headers = {
@@ -43,41 +52,42 @@ headers = {
 try:
     response = requests.get(f"{BASE_URL}/account/get-display-name", headers=headers)
     response.raise_for_status()
-    print("API Call Successful!")
-    print(response.json())
+    data = response.json()
+    print("Display Name:", data["display_name"])
 except requests.exceptions.RequestException as e:
-    print(f"An error occurred: {e}")
-    if response:
-        print(f"Response status code: {response.status_code}")
-        print(f"Response body: {response.text}")
+    print("API call failed:", e)
+    if response is not None:
+        print("Status code:", response.status_code)
+        print("Response body:", response.text)
 ```
 
-### Using JavaScript (Browser fetch)
+### JavaScript (Fetch API)
+
 ```js
 async function getDisplayName() {
-  const API_KEY = "YOUR_API_KEY"; // Replace with your actual API key
+  const API_KEY = "YOUR_API_KEY";
   const BASE_URL = "https://theslow.net/api";
 
   try {
     const response = await fetch(`${BASE_URL}/account/get-display-name`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'X-API-KEY': API_KEY,
-        'Content-Type': 'application/json'
+        "X-API-KEY": API_KEY,
+        "Content-Type": "application/json"
       }
     });
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.error('API Call Failed:', response.status, errorData.error);
+      console.error("API Call Failed:", response.status, errorData.error);
       return null;
     }
 
     const data = await response.json();
-    console.log('Display Name:', data.display_name);
+    console.log("Display Name:", data.display_name);
     return data.display_name;
   } catch (error) {
-    console.error('An unexpected error occurred:', error);
+    console.error("Unexpected error:", error);
     return null;
   }
 }
@@ -85,35 +95,45 @@ async function getDisplayName() {
 // Example usage:
 // getDisplayName();
 ```
+
 ## Responses
-### Success Response (200 OK)
-Returns the user's display name.
+
+### 200 OK
+
+Returns the user’s display name.
+
 ```json
-// Example 1: Display name exists
 {
   "display_name": "JohnDoe"
 }
 ```
-### Error Responses
-#### 401 Unauthorized
-Occurs if authentication fails (e.g., missing or invalid X-API-KEY).
+
+### 401 Unauthorized
+
+Occurs if authentication fails (e.g., missing or invalid API key).
+
 ```json
 {
   "error": "Unauthorized"
 }
 ```
-#### 500 Internal Server Error
-Occurs due to server-side issues, such as a database error or an unexpected critical error.
-```jaon
-// Example 1: Database error
+
+### 500 Internal Server Error
+
+Occurs due to server-side issues (e.g., database problems or unexpected exceptions).
+
+```json
 {
   "error": "Database error while fetching profile."
 }
+```
 
-// Example 2: General internal server error
+```json
 {
   "error": "An internal server error occurred."
 }
 ```
-## Need Further Assistance?
-If you have any questions or encounter issues, please don't hesitate to reach out to our [support team](https://theslow.net/dashboard#support).
+
+## Need Help?
+
+Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).

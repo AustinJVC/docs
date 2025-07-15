@@ -1,0 +1,67 @@
+---
+title: Debugging Common API Errors
+description: Fix common SlowNet API problems like 401s, 409s, or 500s.
+---
+
+## Overview
+
+Sometimes your API call might fail. This guide shows the most common issues, what they mean, and how to fix them.
+
+## 401 Unauthorized
+
+**Error:**
+
+```json
+{
+  "error": "Unauthorized"
+}
+```
+
+✅ **Fix:** Make sure your `X-API-KEY` is correct and included in your request headers.
+
+```bash
+curl -H "X-API-KEY: YOUR_API_KEY" ...
+```
+
+If you recently rotated your key, update your `.env` or CI/CD secrets.
+
+## 409 Conflict (example)
+
+If your API ever adds stricter checks (like preventing duplicate display names), you might see:
+
+```json
+{
+  "error": "Display name already taken."
+}
+```
+
+✅ **Fix:** Choose a different name.
+
+> Right now, SlowNet APIs are pretty forgiving. But as more constraints are added, conflicts may appear.
+
+## 500 Internal Server Error
+
+**Error:**
+
+```json
+{
+  "error": "Could not update site configuration."
+}
+```
+
+✅ **Fix:** Usually means the SlowNet database had a hiccup, or you sent an incomplete payload. Make sure your JSON is valid and includes all the necessary fields if your endpoint requires them.
+
+## General debugging tips
+
+- Check your JSON payload. Is it valid? Missing a comma?
+- Always include your `X-API-KEY`.
+- Try sending a simple request first (like just updating mood) to verify your key works.
+
+## Authentication
+
+See the [Authentication Guide](../../authentication).
+
+## Related
+
+- [Building your SlowNet page](../building-your-slownet-page)
+- [Storing and Rotating API Keys](../storing-and-rotating-api-keys)

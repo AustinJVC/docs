@@ -42,25 +42,29 @@
             "group": "Account APIs",
             "pages": [
               "apis/account-management/get-display-name",
-              "change-display-name"
+              "apis/account-management/update-display-name"
             ]
           },
           {
             "group": "Email Forwarding APIs",
             "pages": [
-              ""
+              "apis/email-forwarding/email-forwarding-status",
+              "apis/email-forwarding/email-forwarding-toggle"
             ]
           },
           {
             "group": "Slowsite Configuration APIs",
             "pages": [
-              ""
+              "apis/site-configuration/get-site-configuration",
+              "apis/site-configuration/get-site-status",
+              "apis/site-configuration/toggle-site-visibility",
+              "apis/site-configuration/update-site-configuration"
             ]
           },
           {
             "group": "Slowhook (Discord Webhook) APIs",
             "pages": [
-              ""
+              "apis/discord-webhooks/send-discord-webhook"
             ]
           }
         ]
@@ -69,10 +73,42 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "Tutorials",
+            "group": "Building Your SlowNet",
             "pages": [
-              "guides/authentication-guide",
-              "guides/error-handling"
+              "guides/building-your-slownet/building-your-slownet-page",
+              "guides/building-your-slownet/enabling-email-forwarding",
+              "guides/building-your-slownet/minimalist-link-site"
+            ]
+          },
+          {
+            "group": "Customization",
+            "pages": [
+              "guides/customization/setting-up-custom-theme"
+            ]
+          },
+          {
+            "group": "Automation",
+            "pages": [
+              "guides/automation/automating-with-github-actions",
+              "guides/automation/integrating-with-zapier-or-n8n"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "guides/integrations/using-slowhooks-to-post-to-discord"
+            ]
+          },
+          {
+            "group": "Security",
+            "pages": [
+              "guides/security/storing-and-rotating-api-keys"
+            ]
+          },
+          {
+            "group": "Troubleshooting",
+            "pages": [
+              "guides/troubleshooting/debugging-common-api-errors"
             ]
           }
         ]

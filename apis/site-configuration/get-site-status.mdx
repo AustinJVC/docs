@@ -1,0 +1,134 @@
+---
+title: Get Site Status
+description: Check whether your SlowNet site is currently enabled or disabled.
+---
+
+## Endpoint
+
+```
+GET https://theslow.net/api/slownetsite/get-site-status
+```
+
+## Overview
+
+This endpoint lets you check if your SlowNet site is currently **enabled** (publicly visible) or **disabled**.
+
+## Authentication
+
+This endpoint requires authentication via an API key.
+Include your API key in the `X-API-KEY` header for each request:
+
+```
+X-API-KEY: YOUR_API_KEY_HERE
+```
+
+For more details, see the [Authentication Guide](../../authentication).
+
+## Parameters
+
+✅ **None**
+This endpoint does not require any path, query, or request body parameters.
+
+## Request Examples
+
+### cURL
+
+```bash
+curl -X GET   'https://theslow.net/api/slownetsite/get-site-status'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'
+```
+
+### Python
+
+```python
+import requests
+
+BASE_URL = "https://theslow.net/api"
+API_KEY = "YOUR_API_KEY"
+
+headers = {
+    "X-API-KEY": API_KEY,
+    "Content-Type": "application/json"
+}
+
+response = requests.get(
+    f"{BASE_URL}/slownetsite/get-site-status",
+    headers=headers
+)
+
+if response.ok:
+    print("✅ Site Status:", response.json())
+else:
+    print("❌ Error:", response.status_code, response.json())
+```
+
+### JavaScript (Fetch)
+
+```js
+async function getSiteStatus() {
+  try {
+    const response = await fetch("/api/slownetsite/get-site-status", {
+      method: "GET",
+      headers: {
+        "X-API-KEY": "YOUR_API_KEY",
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Failed to fetch:", errorData.error);
+      return;
+    }
+
+    const data = await response.json();
+    console.log("Site Status:", data);
+  } catch (err) {
+    console.error("Unexpected error:", err);
+  }
+}
+
+// Example usage:
+// getSiteStatus();
+```
+
+## Responses
+
+### 200 OK
+
+```json
+{
+  "enabled": true
+}
+```
+
+or
+
+```json
+{
+  "enabled": false
+}
+```
+
+### 401 Unauthorized
+
+User is not authenticated.
+
+```json
+{
+  "error": "Unauthorized"
+}
+```
+
+### 500 Internal Server Error
+
+A server-side error occurred.
+
+```json
+{
+  "error": "Could not fetch site status."
+}
+```
+
+## Need Help?
+
+Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).

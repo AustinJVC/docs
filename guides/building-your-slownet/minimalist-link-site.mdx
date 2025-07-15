@@ -1,0 +1,45 @@
+---
+title: Creating a Minimalist Link Site
+description: Use SlowNet to create a clean, minimal page with all your important links.
+---
+
+## Overview
+
+Want a simple profile hub, like Linktree, but fully yours on SlowNet?  
+You can build that by adding only link blocks and skipping a bio or mood.
+
+## Example payload
+
+```json
+{
+  "bio": "",
+  "avatar_url": "https://theslow.net/storage/avatars/me.png",
+  "blocks": [
+    { "type": "link", "content": "https://twitter.com/myprofile", "enabled": true },
+    { "type": "link", "content": "https://instagram.com/myprofile", "enabled": true },
+    { "type": "link", "content": "https://github.com/myprofile", "enabled": true }
+  ]
+}
+```
+
+## cURL example
+
+```bash
+curl -X POST   'https://theslow.net/api/slownetsite/update-site-configuration'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'   -d '{
+    "bio": "",
+    "avatar_url": "https://theslow.net/storage/avatars/me.png",
+    "blocks": [
+      { "type": "link", "content": "https://twitter.com/myprofile", "enabled": true },
+      { "type": "link", "content": "https://instagram.com/myprofile", "enabled": true },
+      { "type": "link", "content": "https://github.com/myprofile", "enabled": true }
+    ]
+  }'
+```
+
+## Authentication
+
+See the [Authentication Guide](../../authentication).
+
+## Related
+
+- [Building your SlowNet page](building-your-slownet-page)

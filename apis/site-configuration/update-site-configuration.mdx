@@ -1,0 +1,193 @@
+---
+title: Update Site Configuration
+description: Update your SlowNet site's bio, avatar, theme, location, mood, and content blocks.
+---
+
+## Endpoint
+
+```
+POST https://theslow.net/api/slownetsite/update-site-configuration
+```
+
+## Overview
+
+This endpoint allows you to update your full SlowNet site configuration in one request.
+It upserts your bio, avatar URL, theme, location, mood, and manages your profile content blocks (adding, updating, deleting as needed).
+
+## Authentication
+
+This endpoint requires authentication via an API key.
+Include your API key in the `X-API-KEY` header for each request:
+
+```
+X-API-KEY: YOUR_API_KEY_HERE
+```
+
+For more details, see the [Authentication Guide](../../authentication).
+
+## Request Body
+
+| Field          | Type    | Required | Description                                                  |
+|----------------|---------|----------|--------------------------------------------------------------|
+| `bio`          | string  | optional | Your site's bio or description.                              |
+| `avatar_url`   | string  | optional | URL to your avatar image.                                    |
+| `theme_id`     | string  | optional | Selected theme ID. If blank, `custom_theme` will be used.    |
+| `custom_theme` | object  | optional | Custom theme settings (if not using a preset theme).         |
+| `display_name` | string  | optional | Your SlowNet site display name.                              |
+| `location`     | string  | optional | Location to display on your site.                            |
+| `mood`         | string  | optional | Mood emoji or string to show on your profile.                |
+| `blocks`       | array   | optional | List of content blocks to add/update, in order by position.  |
+
+### Block object
+
+Each block can look like:
+
+```json
+{
+  "id": "uuid-optional",
+  "type": "text",
+  "content": "Welcome to my SlowNet!",
+  "enabled": true
+}
+```
+
+If `id` is not provided, a new UUID will be created.
+
+## Request Examples
+
+### cURL
+
+```bash
+curl -X POST   'https://theslow.net/api/slownetsite/update-site-configuration'   -H 'X-API-KEY: YOUR_API_KEY'   -H 'Content-Type: application/json'   -d '{
+    "bio": "Hey there!",
+    "avatar_url": "https://theslow.net/storage/avatar.png",
+    "theme_id": "2",
+    "location": "Calgary",
+    "mood": "🌱",
+    "blocks": [
+      { "type": "text", "content": "Welcome!", "enabled": true }
+    ]
+  }'
+```
+
+### Python
+
+```python
+import requests
+
+BASE_URL = "https://theslow.net/api"
+API_KEY = "YOUR_API_KEY"
+
+headers = {
+    "X-API-KEY": API_KEY,
+    "Content-Type": "application/json"
+}
+
+payload = {
+    "bio": "Hey there!",
+    "avatar_url": "https://theslow.net/storage/avatar.png",
+    "theme_id": "2",
+    "location": "Calgary",
+    "mood": "🌱",
+    "blocks": [
+        { "type": "text", "content": "Welcome!", "enabled": True }
+    ]
+}
+
+response = requests.post(
+    f"{BASE_URL}/slownetsite/update-site-configuration",
+    headers=headers,
+    json=payload
+)
+
+if response.ok:
+    print("✅ Updated:", response.json())
+else:
+    print("❌ Error:", response.status_code, response.json())
+```
+
+### JavaScript (Fetch)
+
+```js
+async function updateSiteConfig() {
+  try {
+    const response = await fetch("/api/slownetsite/update-site-configuration", {
+      method: "POST",
+      headers: {
+        "X-API-KEY": "YOUR_API_KEY",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        bio: "Hey there!",
+        avatar_url: "https://theslow.net/storage/avatar.png",
+        theme_id: "2",
+        location: "Calgary",
+        mood: "🌱",
+        blocks: [
+          { type: "text", content: "Welcome!", enabled: true }
+        ]
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Failed to update:", errorData.error);
+      return;
+    }
+
+    const data = await response.json();
+    console.log("Update success:", data);
+  } catch (err) {
+    console.error("Unexpected error:", err);
+  }
+}
+
+// Example usage:
+// updateSiteConfig();
+```
+
+## Responses
+
+### 200 OK
+
+```json
+{
+  "success": true
+}
+```
+
+### 401 Unauthorized
+
+User is not authenticated.
+
+```json
+{
+  "error": "Unauthorized"
+}
+```
+
+### 500 Internal Server Error
+
+Possible errors include failing to upsert the site or manage blocks.
+
+```json
+{
+  "error": "Failed to update site details."
+}
+```
+
+```json
+{
+  "error": "Failed to save content blocks."
+}
+```
+
+```json
+{
+  "error": "Failed to remove old content blocks."
+}
+```
+
+## Need Help?
+
+Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).
