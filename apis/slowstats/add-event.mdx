@@ -6,7 +6,7 @@ description: Create a new event record for a specific project in your SlowNet ac
 ## Endpoint
 
 ```
-POST https://theslow.net/api/slowstats/add-event
+POST https://theslow.net/api/slowstats/ingest-events
 ```
 
 ## Overview
@@ -100,7 +100,7 @@ For unexpected server errors:
 ### CURL
 
 ```bash
-curl -X POST "https://theslow.net/api/slowstats/add-event"      -H "Content-Type: application/json"      -H "X-API-KEY: YOUR_API_KEY_HERE"      -d '{
+curl -X POST "https://theslow.net/api/slowstats/ingest-events"      -H "Content-Type: application/json"      -H "X-API-KEY: YOUR_API_KEY_HERE"      -d '{
        "projectId": "abc123",
        "eventType": "purchase",
        "description": "User completed checkout",
@@ -135,14 +135,14 @@ data = {
   }
 }
 
-response = requests.post("https://theslow.net/api/slowstats/add-event", json=data, headers=headers)
+response = requests.post("https://theslow.net/api/slowstats/ingest-events", json=data, headers=headers)
 print(response.json())
 ```
 
 ### JavaScript (fetch)
 
 ```javascript
-fetch("https://theslow.net/api/slowstats/add-event", {
+fetch("https://theslow.net/api/slowstats/ingest-events", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",

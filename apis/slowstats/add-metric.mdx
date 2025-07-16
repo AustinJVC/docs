@@ -6,7 +6,7 @@ description: Submit a new metric payload for a specific project in your SlowNet 
 ## Endpoint
 
 ```
-POST https://theslow.net/api/slowstats/ingest-metric
+POST https://theslow.net/api/slowstats/ingest-metrics
 ```
 
 ## Overview
@@ -100,7 +100,7 @@ For unexpected server errors:
 ### CURL
 
 ```bash
-curl -X POST "https://theslow.net/api/slowstats/ingest-metric"      -H "Content-Type: application/json"      -H "X-API-KEY: YOUR_API_KEY_HERE"      -d '{
+curl -X POST "https://theslow.net/api/slowstats/ingest-metrics"      -H "Content-Type: application/json"      -H "X-API-KEY: YOUR_API_KEY_HERE"      -d '{
        "projectId": "abc123",
        "payload": {
          "temperature": 72.5,
@@ -123,14 +123,14 @@ data = {
   }
 }
 
-response = requests.post("https://theslow.net/api/slowstats/ingest-metric", json=data, headers=headers)
+response = requests.post("https://theslow.net/api/slowstats/ingest-metrics", json=data, headers=headers)
 print(response.json())
 ```
 
 ### JavaScript (fetch)
 
 ```javascript
-fetch("https://theslow.net/api/slowstats/ingest-metric", {
+fetch("https://theslow.net/api/slowstats/ingest-metrics", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
