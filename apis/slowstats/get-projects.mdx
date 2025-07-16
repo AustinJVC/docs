@@ -1,0 +1,101 @@
+---
+title: Get Projects
+description: Retrieve all projects associated with your API key in your SlowNet account.
+---
+
+## Endpoint
+
+```
+GET https://theslow.net/api/slowstats/get-projects
+```
+
+## Overview
+
+This endpoint retrieves a list of all projects tied to your API key.  
+Use it to list projects for dashboards, dropdowns, or initial app state.
+
+## Authentication
+
+This endpoint requires authentication via an **API key**.
+
+Include your API key in the `X-API-KEY` header:
+
+```
+X-API-KEY: YOUR_API_KEY_HERE
+```
+
+See the [Authentication Guide](../../authentication) for more details.
+
+## Query Parameters
+
+None. This endpoint fetches all projects tied to your API key.
+
+## Responses
+
+### ✅ 200 OK
+
+Returns a JSON array of projects:
+
+```json
+{
+  "projects": [
+    {
+      "id": "string",
+      "name": "string",
+      "created_at": "2025-07-16T00:00:00Z"
+    }
+  ]
+}
+```
+
+### 🔒 401 Unauthorized
+
+If authentication fails (invalid or missing API key):
+
+```json
+{
+  "error": "Unauthorized: You must provide a valid API Key."
+}
+```
+
+### 💥 500 Internal Server Error
+
+For unexpected server errors:
+
+```json
+{
+  "error": "An internal server error occurred."
+}
+```
+
+## Examples
+
+### CURL
+
+```bash
+curl -X GET "https://theslow.net/api/slowstats/get-projects"      -H "X-API-KEY: YOUR_API_KEY_HERE"
+```
+
+### Python (requests)
+
+```python
+import requests
+
+headers = {"X-API-KEY": "YOUR_API_KEY_HERE"}
+response = requests.get("https://theslow.net/api/slowstats/get-projects", headers=headers)
+print(response.json())
+```
+
+### JavaScript (fetch)
+
+```javascript
+fetch("https://theslow.net/api/slowstats/get-projects", {
+  headers: { "X-API-KEY": "YOUR_API_KEY_HERE" }
+})
+  .then(res => res.json())
+  .then(data => console.log(data.projects));
+```
+
+## Notes
+
+- This endpoint enforces **ownership checks**, meaning it only returns projects tied to your API key.

@@ -66,6 +66,16 @@
             "pages": [
               "apis/discord-webhooks/send-discord-webhook"
             ]
+          },
+          {
+            "group": "SlowStats",
+            "pages": [
+              "apis/slowstats/get-project-events",
+              "apis/slowstats/get-project-metrics",
+              "apis/slowstats/get-projects",
+              "apis/slowstats/add-event",
+              "apis/slowstats/add-metric"
+            ]
           }
         ]
       },
