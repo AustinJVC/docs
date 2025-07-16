@@ -3,6 +3,9 @@ title: Add Event
 description: Create a new event record for a specific project in your SlowNet account using an API key.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 ## Endpoint
 
 ```
@@ -14,17 +17,7 @@ POST https://theslow.net/api/slowstats/ingest-events
 This endpoint allows you to create a new event record tied to a project.  
 Optionally, you can trigger a Discord webhook notification at the same time.
 
-## Authentication
-
-This endpoint requires authentication via an **API key**.
-
-Include your API key in the `X-API-KEY` header:
-
-```
-X-API-KEY: YOUR_API_KEY_HERE
-```
-
-See the [Authentication Guide](../../authentication) for more details.
+<AuthSnippet/>
 
 ## Request Body
 
@@ -170,3 +163,5 @@ fetch("https://theslow.net/api/slowstats/ingest-events", {
 
 - This endpoint enforces **ownership checks**, meaning you can only create events for projects tied to your API key.
 - Always ensure your `discordWebhook.url` is a valid HTTPS Discord webhook URL to avoid SSRF rejection.
+
+<SupportSnippet/>

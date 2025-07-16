@@ -3,6 +3,9 @@ title: Get Site Status
 description: Check whether your SlowNet site is currently enabled or disabled.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 ## Endpoint
 
 ```
@@ -13,16 +16,7 @@ GET https://theslow.net/api/slownetsite/get-site-status
 
 This endpoint lets you check if your SlowNet site is currently **enabled** (publicly visible) or **disabled**.
 
-## Authentication
-
-This endpoint requires authentication via an API key.
-Include your API key in the `X-API-KEY` header for each request:
-
-```
-X-API-KEY: YOUR_API_KEY_HERE
-```
-
-For more details, see the [Authentication Guide](../../authentication).
+<AuthSnippet/>
 
 ## Parameters
 
@@ -129,6 +123,4 @@ A server-side error occurred.
 }
 ```
 
-## Need Help?
-
-Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).
+<SupportSnippet/>

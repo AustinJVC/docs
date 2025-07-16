@@ -3,6 +3,9 @@ title: Update Site Configuration
 description: Update your SlowNet site's bio, avatar, theme, location, mood, and content blocks.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 ## Endpoint
 
 ```
@@ -14,16 +17,7 @@ POST https://theslow.net/api/slownetsite/update-site-configuration
 This endpoint allows you to update your full SlowNet site configuration in one request.
 It upserts your bio, avatar URL, theme, location, mood, and manages your profile content blocks (adding, updating, deleting as needed).
 
-## Authentication
-
-This endpoint requires authentication via an API key.
-Include your API key in the `X-API-KEY` header for each request:
-
-```
-X-API-KEY: YOUR_API_KEY_HERE
-```
-
-For more details, see the [Authentication Guide](../../authentication).
+<AuthSnippet/>
 
 ## Request Body
 
@@ -188,6 +182,4 @@ Possible errors include failing to upsert the site or manage blocks.
 }
 ```
 
-## Need Help?
-
-Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).
+<SupportSnippet/>

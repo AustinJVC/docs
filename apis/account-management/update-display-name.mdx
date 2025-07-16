@@ -3,6 +3,10 @@ title: Update Display Name
 description: Update the display name of the currently authenticated user.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+import unauthorizederror from '/snippets/errors/unauthorizederror.mdx';
+
 ## Endpoint
 
 ```
@@ -20,16 +24,7 @@ When a display name is updated:
 
 An analytics event is also logged for auditing and tracking purposes.
 
-## Authentication
-
-This endpoint requires authentication via an API key.  
-Include your API key in the `X-API-KEY` header for each request:
-
-```
-X-API-KEY: YOUR_API_KEY_HERE
-```
-
-For more details, see the [Authentication Guide](../../authentication).
+<AuthSnippet/>
 
 ## Request Body
 
@@ -122,7 +117,7 @@ Successfully updated the display name.
 ```json
 {
   "success": true,
-  "message": "Name updated. Email forwarding has been disabled."
+  "message": ""Name updated. Due to this, email forwarding has been disabled. You can enable it via the API or through the dashboard.""
 }
 ```
 
@@ -148,15 +143,7 @@ Invalid or missing input.
 }
 ```
 
-### 401 Unauthorized
-
-User is not authenticated.
-
-```json
-{
-  "error": "Unauthorized"
-}
-```
+<unauthorizederror/>
 
 ### 404 Not Found
 
@@ -194,6 +181,4 @@ A server-side error occurred.
 }
 ```
 
-## Need Help?
-
-Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).
+<SupportSnippet/>

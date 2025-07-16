@@ -3,6 +3,9 @@ title: Rate Limits
 description: To ensure the stability and fair usage of our API for all users, we implement rate limiting. This means there's a limit to the number of requests you can make within a given time period. Understanding and respecting these limits is crucial for building robust applications.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 ## How Rate Limiting Works
 Our API applies rate limits per API key. If you exceed the allowed number of requests, your subsequent requests will be temporarily blocked, and you will receive a 429 Too Many Requests HTTP status code.
 
@@ -87,5 +90,6 @@ def make_api_call_with_retry(url, headers, max_retries=5):
 # make_api_call_with_retry(f"{BASE_URL}{ENDPOINT}", headers)
 ```
 
-## Need Further Assistance?
-If you have any questions about rate limiting or encounter persistent 429 errors, please don't hesitate to reach out to our [support team](https://theslow.net/dashboard#support).
+<AuthSnippet/>
+
+<SupportSnippet/>

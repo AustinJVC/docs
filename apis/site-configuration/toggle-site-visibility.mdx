@@ -3,6 +3,9 @@ title: Toggle Site Visibility
 description: Enable or disable your public SlowNet site with a single API call.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 ## Endpoint
 
 ```
@@ -14,16 +17,7 @@ POST https://theslow.net/api/slownetsite/toggle-site-visibility
 This endpoint toggles the public visibility of your SlowNet site.
 If your site is currently **enabled**, calling this endpoint will **disable** it — and vice versa.
 
-## Authentication
-
-This endpoint requires authentication via an API key.
-Include your API key in the `X-API-KEY` header for each request:
-
-```
-X-API-KEY: YOUR_API_KEY_HERE
-```
-
-For more details, see the [Authentication Guide](../../authentication).
+<AuthSnippet/>
 
 ## Parameters
 
@@ -134,6 +128,4 @@ A server-side error occurred.
 }
 ```
 
-## Need Help?
-
-Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).
+<SupportSnippet/>

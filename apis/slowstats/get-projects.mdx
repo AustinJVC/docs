@@ -3,6 +3,9 @@ title: Get Projects
 description: Retrieve all projects associated with your API key in your SlowNet account.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 ## Endpoint
 
 ```
@@ -14,17 +17,7 @@ GET https://theslow.net/api/slowstats/get-projects
 This endpoint retrieves a list of all projects tied to your API key.  
 Use it to list projects for dashboards, dropdowns, or initial app state.
 
-## Authentication
-
-This endpoint requires authentication via an **API key**.
-
-Include your API key in the `X-API-KEY` header:
-
-```
-X-API-KEY: YOUR_API_KEY_HERE
-```
-
-See the [Authentication Guide](../../authentication) for more details.
+<AuthSnippet/>
 
 ## Query Parameters
 
@@ -99,3 +92,5 @@ fetch("https://theslow.net/api/slowstats/get-projects", {
 ## Notes
 
 - This endpoint enforces **ownership checks**, meaning it only returns projects tied to your API key.
+
+<SupportSnippet/>

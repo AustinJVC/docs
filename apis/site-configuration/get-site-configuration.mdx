@@ -3,6 +3,9 @@ title: Get Site Configuration
 description: Retrieve your SlowNet Site configuration, profile blocks, and available themes.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 ## Endpoint
 
 ```
@@ -17,16 +20,7 @@ This endpoint returns the full configuration needed to render and manage your Sl
 - All your profile content blocks, ordered by their position.
 - A list of all available themes you can choose from.
 
-## Authentication
-
-This endpoint requires authentication via an API key.
-Include your API key in the `X-API-KEY` header for each request:
-
-```
-X-API-KEY: YOUR_API_KEY_HERE
-```
-
-For more details, see the [Authentication Guide](../../authentication).
+<AuthSnippet/>
 
 ## Parameters
 
@@ -147,6 +141,4 @@ A server-side error occurred fetching your site configuration.
 }
 ```
 
-## Need Help?
-
-Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).
+<SupportSnippet/>

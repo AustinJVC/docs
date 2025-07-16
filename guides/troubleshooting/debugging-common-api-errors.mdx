@@ -3,6 +3,9 @@ title: Debugging Common API Errors
 description: Fix common SlowNet API problems like 401s, 409s, or 500s.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 ## Overview
 
 Sometimes your API call might fail. This guide shows the most common issues, what they mean, and how to fix them.
@@ -57,11 +60,11 @@ If your API ever adds stricter checks (like preventing duplicate display names),
 - Always include your `X-API-KEY`.
 - Try sending a simple request first (like just updating mood) to verify your key works.
 
-## Authentication
-
-See the [Authentication Guide](../../authentication).
+<AuthSnippet/>
 
 ## Related
 
 - [Building your SlowNet page](../building-your-slownet-page)
 - [Storing and Rotating API Keys](../storing-and-rotating-api-keys)
+
+<SupportSnippet/>

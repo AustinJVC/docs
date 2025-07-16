@@ -3,6 +3,10 @@ title: Toggle Email Forwarding
 description: Enable or disable email forwarding for your SlowNet alias, and set the forwarding address.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+import unauthorizederror from '/snippets/errors/unauthorizederror.mdx';
+
 ## Endpoint
 
 ```
@@ -14,16 +18,7 @@ POST https://theslow.net/api/email-forwarding/email-forwarding-toggle
 This endpoint allows you to enable or disable email forwarding for your SlowNet alias.
 When enabling, it synchronizes with our email forwarding provider (ImprovMX), updates your SlowNet profile, and syncs with Brevo for contact management.
 
-## Authentication
-
-This endpoint requires authentication via an API key.
-Include your API key in the `X-API-KEY` header for each request:
-
-```
-X-API-KEY: YOUR_API_KEY_HERE
-```
-
-For more details, see the [Authentication Guide](../../authentication).
+<AuthSnippet/>
 
 ## Request Body
 
@@ -123,15 +118,7 @@ Invalid input, such as missing email when enabling.
 }
 ```
 
-### 401 Unauthorized
-
-User is not authenticated.
-
-```json
-{
-  "error": "Unauthorized: You must be logged in."
-}
-```
+<unauthorizederror/>
 
 ### 404 Not Found
 
@@ -161,6 +148,4 @@ or
 }
 ```
 
-## Need Help?
-
-Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).
+<SupportSnippet/>

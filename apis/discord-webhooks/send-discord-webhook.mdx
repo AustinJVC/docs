@@ -3,6 +3,10 @@ title: Send or Edit Discord Webhook
 description: Send new messages or edit existing Discord webhook messages via Slowhooks.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+import unauthorizederror from '/snippets/errors/unauthorizederror.mdx';
+
 ## Endpoint
 
 ```
@@ -14,16 +18,7 @@ PATCH /api/slowhooks/send-discord-webhook
 
 This endpoint allows you to **send** new Discord webhook messages or **edit** existing ones by providing the webhook URL, message content or embeds, and (for edits) the message ID.
 
-## Authentication
-
-This endpoint requires authentication via an API key.
-Include your API key in the `X-API-KEY` header for each request:
-
-```
-X-API-KEY: YOUR_API_KEY_HERE
-```
-
-For more details, see the [Authentication Guide](../../authentication).
+<AuthSnippet/>
 
 ## Request Body
 
@@ -151,15 +146,7 @@ Missing required fields or invalid webhook URL.
 }
 ```
 
-### 401 Unauthorized
-
-Not authenticated.
-
-```json
-{
-  "error": "Unauthorized"
-}
-```
+<unauthorizederror/>
 
 ### 500 Internal Server Error
 
@@ -171,6 +158,4 @@ An unexpected issue occurred contacting Discord or updating analytics.
 }
 ```
 
-## Need Help?
-
-Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).
+<SupportSnippet/>

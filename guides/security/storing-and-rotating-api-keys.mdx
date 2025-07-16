@@ -3,6 +3,9 @@ title: Storing and Rotating API Keys
 description: Keep your SlowNet API key safe and rotate it if it ever gets compromised.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 ## Overview
 
 Your `X-API-KEY` gives full access to your SlowNet account via the API.  
@@ -52,11 +55,11 @@ If you think your key might have been leaked, you’ll want to rotate it:
 
 If someone else gains access to your key, they can change your site or forward your emails. So rotate it immediately if you suspect compromise.
 
-## Authentication
-
-See the [Authentication Guide](../../authentication).
+<AuthSnippet/>
 
 ## Related
 
 - [Automating with GitHub Actions](../automating-with-github-actions)
 - [Integrating with Zapier or n8n](../integrating-with-zapier-or-n8n)
+
+<SupportSnippet/>
