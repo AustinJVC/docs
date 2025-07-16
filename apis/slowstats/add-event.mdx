@@ -1,0 +1,172 @@
+---
+title: Add Event
+description: Create a new event record for a specific project in your SlowNet account using an API key.
+---
+
+## Endpoint
+
+```
+POST https://theslow.net/api/slowstats/ingest-events
+```
+
+## Overview
+
+This endpoint allows you to create a new event record tied to a project.  
+Optionally, you can trigger a Discord webhook notification at the same time.
+
+## Authentication
+
+This endpoint requires authentication via an **API key**.
+
+Include your API key in the `X-API-KEY` header:
+
+```
+X-API-KEY: YOUR_API_KEY_HERE
+```
+
+See the [Authentication Guide](../../authentication) for more details.
+
+## Request Body
+
+Send a JSON payload with the following structure:
+
+| Field                  | Type                | Required | Description |
+|-------------------------|---------------------|----------|-------------|
+| `projectId`             | string              | Yes      | ID of the project to associate the event with. |
+| `eventType`             | string              | Yes      | Type or category of the event. |
+| `description`           | string              | No       | Optional human-readable description. |
+| `payload`               | object              | No       | Arbitrary JSON payload for additional data. |
+| `color`                 | integer             | No       | Hex integer color (e.g., `16777215` for white). |
+| `discordWebhook`        | object              | No       | Optional Discord webhook to notify. |
+| `discordWebhook.url`    | string              | Yes if `discordWebhook` | Must be a valid HTTPS Discord webhook URL. |
+| `discordWebhook.title`  | string              | Yes if `discordWebhook` | Title of the Discord message. |
+| `discordWebhook.description` | string        | No       | Description in the Discord embed. |
+| `discordWebhook.color`  | integer             | No       | Override color for the Discord embed.|
+
+## Responses
+
+### ✅ 200 OK
+
+Event created successfully:
+
+```json
+{
+  "message": "Event created successfully."
+}
+```
+
+### ⚠️ 400 Bad Request
+
+If required fields are missing or the Discord URL is invalid:
+
+```json
+{
+  "error": "Invalid request body."
+}
+```
+
+### 🔒 401 Unauthorized
+
+If authentication fails:
+
+```json
+{
+  "error": "Unauthorized: You must provide a valid API Key."
+}
+```
+
+### 🚫 403 Forbidden
+
+If the project does not belong to the authenticated user:
+
+```json
+{
+  "error": "Forbidden: You do not have access to this project."
+}
+```
+
+### 💥 500 Internal Server Error
+
+For unexpected server errors:
+
+```json
+{
+  "error": "An internal server error occurred."
+}
+```
+
+## Examples
+
+### CURL
+
+```bash
+curl -X POST "https://theslow.net/api/slowstats/ingest-events"      -H "Content-Type: application/json"      -H "X-API-KEY: YOUR_API_KEY_HERE"      -d '{
+       "projectId": "abc123",
+       "eventType": "purchase",
+       "description": "User completed checkout",
+       "payload": {"amount": 29.99},
+       "color": 16776960,
+       "discordWebhook": {
+         "url": "https://discord.com/api/webhooks/XXXX/XXXX",
+         "title": "New Purchase",
+         "description": "A user spent $29.99",
+         "color": 65280
+       }
+     }'
+```
+
+### Python (requests)
+
+```python
+import requests
+
+headers = {"X-API-KEY": "YOUR_API_KEY_HERE"}
+data = {
+  "projectId": "abc123",
+  "eventType": "purchase",
+  "description": "User completed checkout",
+  "payload": {"amount": 29.99},
+  "color": 16776960,
+  "discordWebhook": {
+    "url": "https://discord.com/api/webhooks/XXXX/XXXX",
+    "title": "New Purchase",
+    "description": "A user spent $29.99",
+    "color": 65280
+  }
+}
+
+response = requests.post("https://theslow.net/api/slowstats/ingest-events", json=data, headers=headers)
+print(response.json())
+```
+
+### JavaScript (fetch)
+
+```javascript
+fetch("https://theslow.net/api/slowstats/ingest-events", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "X-API-KEY": "YOUR_API_KEY_HERE"
+  },
+  body: JSON.stringify({
+    projectId: "abc123",
+    eventType: "purchase",
+    description: "User completed checkout",
+    payload: { amount: 29.99 },
+    color: 16776960,
+    discordWebhook: {
+      url: "https://discord.com/api/webhooks/XXXX/XXXX",
+      title: "New Purchase",
+      description: "A user spent $29.99",
+      color: 65280
+    }
+  })
+})
+  .then(res => res.json())
+  .then(data => console.log(data));
+```
+
+## Notes
+
+- This endpoint enforces **ownership checks**, meaning you can only create events for projects tied to your API key.
+- Always ensure your `discordWebhook.url` is a valid HTTPS Discord webhook URL to avoid SSRF rejection.
