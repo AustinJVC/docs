@@ -3,6 +3,9 @@ title: Making Requests
 description: This guide provides a foundational understanding of how to construct and send requests to our API. All interactions with our API are done via standard HTTP methods over HTTPS.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 ## Base URL
 All API endpoints are accessible via the following base URL:
 
@@ -33,10 +36,7 @@ Our API utilizes standard HTTP methods (also known as verbs) to indicate the des
 
     - **Example**: Deleting a specific user.
 
-## Authentication
-As detailed in the Authentication guide, all requests must include your API key in the X-API-KEY HTTP header.
-
-``X-API-KEY: YOUR_API_KEY_HERE``
+<AuthSnippet/>
 
 ## Request Headers
 Beyond authentication, common headers you'll use include:
@@ -161,5 +161,5 @@ async function createUser() {
 // Example usage:
 // createUser();
 ```
-## Need Further Assistance?
-If you have any questions about making requests or encounter issues, please don't hesitate to reach out to our support team.
+
+<SupportSnippet/>

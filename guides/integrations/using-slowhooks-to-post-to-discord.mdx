@@ -3,6 +3,9 @@ title: Using Slowhooks to Post to Discord
 description: Learn to use Slowhooks to send or edit Discord webhook messages from your SlowNet.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 ## Overview
 
 Slowhooks let you post directly to Discord channels using webhooks — perfect for sending updates, notifications, or even little daily logs from your SlowNet.
@@ -69,10 +72,10 @@ curl -X PATCH   'https://theslow.net/api/slowhooks/send-discord-webhook'   -H 'X
   }'
 ```
 
-## Authentication
-
-See the [Authentication Guide](../../authentication).
+<AuthSnippet/>
 
 ## Related
 
 - [Building your SlowNet page](../building-your-slownet-page)
+
+<SupportSnippet/>

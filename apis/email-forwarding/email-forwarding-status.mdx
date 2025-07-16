@@ -3,6 +3,10 @@ title: Get Email Forwarding Status
 description: Retrieve the current email forwarding status and forwarding address of the authenticated user.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+import unauthorizederror from '/snippets/errors/unauthorizederror.mdx';
+
 ## Endpoint
 
 ```
@@ -13,16 +17,7 @@ GET https://theslow.net/api/email-forwarding/email-forwarding-status
 
 This endpoint allows you to check if email forwarding is currently enabled on your account, and view the forwarding email address if set.
 
-## Authentication
-
-This endpoint requires authentication via an API key.  
-Include your API key in the `X-API-KEY` header for each request:
-
-```
-X-API-KEY: YOUR_API_KEY_HERE
-```
-
-For more details, see the [Authentication Guide](../../authentication).
+<AuthSnippet/>
 
 ## Parameters
 
@@ -111,15 +106,7 @@ Returns the forwarding status and forwarding email.
 }
 ```
 
-### 401 Unauthorized
-
-User is not authenticated.
-
-```json
-{
-  "error": "Unauthorized: You must be logged in."
-}
-```
+<unauthorizederror/>
 
 ### 500 Internal Server Error
 
@@ -142,6 +129,4 @@ If your profile does not yet exist in the database, the API gracefully returns:
 }
 ```
 
-## Need Help?
-
-Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).
+<SupportSnippet/>

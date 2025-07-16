@@ -2,6 +2,8 @@
 title: Setting Up a Custom Theme
 description: Customize your SlowNet site with your own colors, fonts, and style.
 ---
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
 
 ## Overview
 
@@ -73,10 +75,10 @@ curl -X POST   'https://theslow.net/api/slownetsite/update-site-configuration'  
 - If `theme_id` is set, `custom_theme` is ignored.
 - To go 100% custom, leave `theme_id` empty or null.
 
-## Authentication
-
-See the [Authentication Guide](../../authentication).
+<AuthSnippet/>
 
 ## Related
 
 - [Building your SlowNet page](../building-your-slownet-page)
+
+<SupportSnippet/>

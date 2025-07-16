@@ -3,6 +3,9 @@ title: Building Your SlowNet Page
 description: Get started by creating your personalized SlowNet page with bio, avatar, mood, and blocks.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 ## Overview
 
 This guide walks you through building your SlowNet page from scratch — including setting up your bio, avatar, location, mood, and adding profile blocks.
@@ -54,11 +57,11 @@ curl -X POST   'https://theslow.net/api/slownetsite/update-site-configuration'  
   }'
 ```
 
-## Authentication
-
-See the [Authentication Guide](../../authentication).
+<AuthSnippet/>
 
 ## Next steps
 
 - [Enable email forwarding](enabling-email-forwarding)
 - [Create a minimalist Linktree-style page](minimalist-linktree-clone)
+
+<SupportSnippet/>

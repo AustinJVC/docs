@@ -3,6 +3,9 @@ title: Get Project Metrics
 description: Retrieve aggregate metrics for a specific project in your SlowNet account using an API key.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 ## Endpoint
 
 ```
@@ -14,17 +17,7 @@ GET https://theslow.net/api/slowstats/get-metrics?projectId=YOUR_PROJECT_ID
 This endpoint retrieves aggregate metrics (like counts or summaries) for the specified project.  
 Use it to power dashboards, summaries, or quick overviews of project activity.
 
-## Authentication
-
-This endpoint requires authentication via an **API key**.
-
-Include your API key in the `X-API-KEY` header:
-
-```
-X-API-KEY: YOUR_API_KEY_HERE
-```
-
-See the [Authentication Guide](../../authentication) for more details.
+<AuthSnippet/>
 
 ## Query Parameters
 
@@ -124,3 +117,5 @@ fetch("https://theslow.net/api/slowstats/get-metrics?projectId=abc123", {
 
 - This endpoint enforces **ownership checks**, meaning you can only retrieve metrics for projects tied to your API key.
 - The metrics object may be expanded over time with more fields.
+
+<SupportSnippet/>

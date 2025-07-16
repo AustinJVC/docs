@@ -1,16 +1,19 @@
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 This guide will get you set up and ready to make your first API call in just a few minutes. Follow these simple steps to begin integrating with our platform.
 
 ## Step 1: Sign Up and Get Your API Key
 
 Before you can interact with our APIs, you'll need to sign up for an account and obtain your unique API key.
 
-1. **Sign Up:** If you haven't already, create an account here.
+1. **Sign Up:** If you haven't already, create an account [here](https://theslow.net/signup).
 
-2. **Access Dashboard:** Once signed in, navigate to the settings section of the dashboard (near the bottom!)
+2. **Access Dashboard:** Once signed in, navigate to the settings section of the [dashboard](https://theslow.net/dashboard) (near the bottom!)
 
 3. **Generate API Key:** In the settings, look for the area titled "API Keys." Generate a new API key.
 
-- **Important:** Keep your API key secure and do not share it publicly. Treat it like a password. When interacting with most of our general APIs, you will typically pass this key in an X-API-KEY header.
+- **Important:** Keep your API key secure and do not share it publicly. Treat it like a password. When interacting with most of our general APIs, you will typically pass this key in an ``X-API-KEY`` header.
 
 ## Step 2: Choose Your Preferred Language/Tool
 Our API is designed to be language-agnostic, meaning you can use it with any programming language or tool that can send HTTP requests. Here are some common options:
@@ -25,7 +28,7 @@ Our API is designed to be language-agnostic, meaning you can use it with any pro
 Let's make a simple call to verify your setup. We'll use the ``/api/account/get-display-name`` endpoint as an example, which retrieves the display name of the currently authenticated user.
 
 ### Using cURL (Command Line)
-Open your terminal or command prompt and run the following command. Replace YOUR_API_KEY with the actual API key you obtained in Step 1.
+Open your terminal or command prompt and run the following command. Replace ``YOUR_API_KEY`` with the actual API key you obtained in Step 1.
 ```
 curl -X GET \
   'https://theslow.net/api/account/get-display-name' \
@@ -121,4 +124,4 @@ Congratulations! You've successfully made your first API call using your API key
 
 - **Understand Core Concepts:** Get a better grasp of our platform's underlying principles.
 
-If you encounter any issues, don't hesitate to reach out to our [support team](https://theslow.net/dashboard#support).
+<SupportSnippet/>

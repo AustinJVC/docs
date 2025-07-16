@@ -3,6 +3,9 @@ title: Ingest Metric
 description: Submit a new metric payload for a specific project in your SlowNet account using an API key.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 ## Endpoint
 
 ```
@@ -14,17 +17,7 @@ POST https://theslow.net/api/slowstats/ingest-metrics
 This endpoint allows you to submit arbitrary metric data for a project.  
 Use it to track analytics, counters, or any structured data you want tied to your project.
 
-## Authentication
-
-This endpoint requires authentication via an **API key**.
-
-Include your API key in the `X-API-KEY` header:
-
-```
-X-API-KEY: YOUR_API_KEY_HERE
-```
-
-See the [Authentication Guide](../../authentication) for more details.
+<AuthSnippet/>
 
 ## Request Body
 
@@ -151,3 +144,5 @@ fetch("https://theslow.net/api/slowstats/ingest-metrics", {
 ## Notes
 
 - This endpoint enforces **ownership checks**, meaning you can only submit metrics for projects tied to your API key.
+
+<SupportSnippet/>

@@ -3,6 +3,9 @@ title: Creating a Minimalist Link Site
 description: Use SlowNet to create a clean, minimal page with all your important links.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 ## Overview
 
 Want a simple profile hub, like Linktree, but fully yours on SlowNet?  
@@ -36,10 +39,10 @@ curl -X POST   'https://theslow.net/api/slownetsite/update-site-configuration'  
   }'
 ```
 
-## Authentication
-
-See the [Authentication Guide](../../authentication).
+<AuthSnippet/>
 
 ## Related
 
 - [Building your SlowNet page](building-your-slownet-page)
+
+<SupportSnippet/>

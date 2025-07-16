@@ -3,9 +3,9 @@
   "name": "TheSlowNet",
   "theme": "mint",
   "colors": {
-    "primary": "#8C00FF",
-    "light": "#A233FF",
-    "dark": "#7500D1"
+    "primary": "#7B34E5",
+    "light": "#9C66F0",
+    "dark": "#5E17B3"
   },
   "favicon": "/favicon.svg",
   "logo": {

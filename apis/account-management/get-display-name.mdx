@@ -3,6 +3,10 @@ title: Get Display Name
 description: Retrieve the display name of the currently authenticated user.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+import unauthorizederror from '/snippets/errors/unauthorizederror.mdx';
+
 ## Endpoint
 
 ```
@@ -11,17 +15,9 @@ GET https://theslow.net/api/account/get-display-name
 
 ## Overview
 
-This endpoint fetches the `display_name` associated with the provided API key.
+This endpoint fetches the `display_name` (SlowNet Name) associated with the provided API key.
 
-## Authentication
-
-This endpoint requires an API key. Include it in the `X-API-KEY` header:
-
-```
-X-API-KEY: YOUR_API_KEY_HERE
-```
-
-For more details, see the [Authentication Guide](../../authentication).
+<AuthSnippet/> 
 
 ## Parameters
 
@@ -108,15 +104,7 @@ Returns the user’s display name.
 }
 ```
 
-### 401 Unauthorized
-
-Occurs if authentication fails (e.g., missing or invalid API key).
-
-```json
-{
-  "error": "Unauthorized"
-}
-```
+<unauthorizederror/>
 
 ### 500 Internal Server Error
 
@@ -134,6 +122,4 @@ Occurs due to server-side issues (e.g., database problems or unexpected exceptio
 }
 ```
 
-## Need Help?
-
-Questions or issues? Reach out to our [support team](https://theslow.net/dashboard#support).
+<SupportSnippet/>

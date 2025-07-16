@@ -3,6 +3,9 @@ title: Get Project Events
 description: Retrieve all events for a specific project in your SlowNet account using an API key.
 ---
 
+import AuthSnippet from '/snippets/authentication/authentication.mdx';
+import SupportSnippet from '/snippets/support/support-contact.mdx';
+
 ## Endpoint
 
 ```
@@ -14,17 +17,7 @@ GET https://theslow.net/api/slowstats/get-events?projectId=YOUR_PROJECT_ID
 This endpoint retrieves all event records for a given project, ordered by most recent first.  
 Use it to fetch analytics or event tracking data tied to your projects.
 
-## Authentication
-
-This endpoint requires authentication via an **API key**.
-
-Include your API key in the `X-API-KEY` header:
-
-```
-X-API-KEY: YOUR_API_KEY_HERE
-```
-
-See the [Authentication Guide](../../authentication) for more details.
+<AuthSnippet/>
 
 ## Query Parameters
 
@@ -125,3 +118,5 @@ fetch("https://theslow.net/api/slowstats/get-events?projectId=abc123", {
 
 - This endpoint enforces **ownership checks**, meaning you can only fetch events for projects tied to your API key.
 - Results are ordered by `occurred_at` descending (most recent first).
+
+<SupportSnippet/>
